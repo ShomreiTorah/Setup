@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" ?>
+<Dictionary>
+	<Words>
+		<Recognized>
+			<Word>configurator</Word>
+
+			<Word>כהן</Word>
+			<Word>לוי</Word>
+			<Word>שלישי</Word>
+			<Word>רביעי</Word>
+			<Word>חמישי</Word>
+			<Word>שישי</Word>
+			<Word>שביעי</Word>
+			<Word>מפטיר</Word>
+
+			<Word>הגבהה</Word>
+			<Word>פתיחה</Word>
+
+			<Word>ימים</Word>
+			<Word>נוראים</Word>
+
+			<Word>מתנה</Word>
+			<Word>עליה</Word>
+
+			<Word>מי</Word>
+			<Word>שברך</Word>
+
+			<Word>סעודה</Word>
+			<Word>שלישית</Word>
+
+			<Word>undeposited</Word>
+
+			<Word>Decryptor</Word>
+			<Word>Encryptor</Word>
+
+			<Word>Melave</Word>
+			<Word>Malka</Word>
+			<Word>Shalach</Word>
+			<Word>Aliyah</Word>
+
+			<Word>Daf</Word>
+			<Word>Yomi</Word>
+			<Word>Schedulizer</Word>
+			<Word>שבתיוםטוב</Word>
+			<Word>יוםטוב</Word>
+			<Word>סוףשמע</Word>
+			<Word>דףיומי</Word>
+			<Word>מעריב</Word>
+			<Word>שחרית</Word>
+			<Word>שיעור</Word>
+			<Word>פורים</Word>
+			<Word>ערב</Word>
+
+			<Word>renderer</Word>
+			<Word>xpath</Word>
+			<Word>Zmanim</Word>
+			<Word>Gmail</Word>
+
+			<Word>Shomrei</Word>
+			<Word>parsha</Word>
+			<Word>parshiyos</Word>
+
+			<Word>שבת</Word>
+			<Word>נקוד</Word>
+			<Word>נקודות</Word>
+
+			<Word>ראשחודש</Word>
+
+			<Word>חולהמועד</Word>
+			<Word>דאריתא</Word>
+			<Word>דרבנן</Word>
+			<Word>תענית</Word>
+
+			<Word>זכר</Word>
+			<Word>נקבה</Word>
+
+			<Word>פרשה</Word>
+			<Word>פרשיות</Word>
+
+			<Word>חסר</Word>
+			<Word>כסדרן</Word>
+			<Word>מלא</Word>
+
+			<Word>תשרי</Word>
+			<Word>חשון</Word>
+			<Word>כסלו</Word>
+			<Word>טבת</Word>
+			<Word>שבט</Word>
+			<Word>אדר</Word>
+			<Word>ניסן</Word>
+			<Word>אייר</Word>
+			<Word>סיון</Word>
+			<Word>תמוז</Word>
+			<Word>אב</Word>
+			<Word>אלול</Word>
+
+			<Word>חנוכה</Word>
+			<Word>השנה</Word>
+			<Word>ראש</Word>
+			<Word>כיפור</Word>
+			<Word>יום</Word>
+			<Word>באב</Word>
+			<Word>תשעה</Word>
+			<Word>סוכות</Word>
+			<Word>פסח</Word>
+			<Word>שבועות</Word>
+
+			<Word>Zman</Word>
+			<Word>גרא</Word>
+			<Word>שמע</Word>
+			<Word>קריאת</Word>
+			<Word>זמן</Word>
+			<Word>סוף</Word>
+			<Word>תפילה</Word>
+			<Word>עלות</Word>
+			<Word>טלית</Word>
+			<Word>חצות</Word>
+			<Word>מנחה</Word>
+			<Word>גדולה</Word>
+			<Word>קטנה</Word>
+			<Word>פלג</Word>
+			<Word>המנחה</Word>
+			<Word>צאת</Word>
+		</Recognized>
+		<DiscreteExceptions>
+			<Term>SubType</Term>
+		</DiscreteExceptions>
+	</Words>
+	<Acronyms>
+		<CasingExceptions>
+			<Acronym>Ce</Acronym>
+		</CasingExceptions>
+	</Acronyms>
+</Dictionary>
