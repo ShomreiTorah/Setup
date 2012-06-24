@@ -1,0 +1,4 @@
+CREATE TABLE dbo.ProcessedEmails(
+	UID				VARCHAR(70)		NOT NULL	PRIMARY KEY,
+	DateProcessed	DATETIME		NOT NULL	DEFAULT(getdate())
+)
