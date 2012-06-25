@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Schema\ConfigRoot.cs" />
+    <Compile Include="Schema\CryptoKey.cs" />
     <Compile Include="Schema\DatabaseConfig.cs" />
     <Compile Include="Schema\FtpConfig.cs" />
     <Compile Include="Schema\PopConfig.cs" />

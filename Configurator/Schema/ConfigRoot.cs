@@ -15,7 +15,12 @@ namespace Configurator.Schema {
 		[ConfigProperty("Databases/Test")]
 		public DatabaseConfig TestDB { get; private set; }
 
-		//TODO: Updates
+		[ConfigProperty("Updates/@Path")]
+		public string UpdatePath { get; set; }
+		[ConfigProperty("Updates/Cryptography/FileDecryptor")]
+		public CryptoKey UpdateFileskey { get;private set; }
+		[ConfigProperty("Updates/Cryptography/UpdateVerifier", EmbedXml = true)]
+		public string UpdateSigningKey { get; set; }
 
 		[ConfigProperty("FTP")]
 		public FtpConfig Ftp { get; private set; }

@@ -13,7 +13,9 @@ namespace Configurator {
 		class Property {
 			public Property(PropertyInfo prop) {
 				Info = prop;
-				XPath = ((ConfigPropertyAttribute)prop.GetCustomAttributes(typeof(ConfigPropertyAttribute), true)[0]).XPath;
+				var attr = (ConfigPropertyAttribute)prop.GetCustomAttributes(typeof(ConfigPropertyAttribute), true)[0];
+				XPath = attr.XPath;
+				EmbedXml = attr.EmbedXml;
 
 				IsComplexProperty = typeof(ConfigObject).IsAssignableFrom(prop.PropertyType);
 
@@ -21,6 +23,9 @@ namespace Configurator {
 				if (IsComplexProperty)
 					Debug.Assert(!XPath.Contains("@"), "Complex properties cannot be mapped to XML attributes");
 			}
+
+			///<summary>Indicates whether the value of this property should be written directly as an XML element (without being encoded).</summary>
+			public bool EmbedXml { get; set; }
 
 			public string XPath { get; private set; }
 			public PropertyInfo Info { get; private set; }
@@ -49,22 +54,26 @@ namespace Configurator {
 				else if (node == null)
 					prop.Info.SetValue(this, null, null);
 				else
-					prop.Info.SetValue(this, Convert.ChangeType(GetValue(node), prop.Info.PropertyType), null);
+					prop.Info.SetValue(this, Convert.ChangeType(GetValue(node, prop.EmbedXml), prop.Info.PropertyType), null);
 			}
 		}
-		static object GetValue(object xValue) {
-			var attr = xValue as XAttribute;
-			if (attr != null)
-				return attr.Value;
+		static object GetValue(object xValue, bool asXml) {
+			var elem = xValue as XElement;
+			if (asXml) {
+				if (!elem.HasElements)
+					return null;
+				return elem.Elements().Single().ToString();
+			} else if (elem != null)
+				return elem.Value;
 			else
-				return ((XElement)xValue).Value;
+				return ((XAttribute)xValue).Value;
 		}
 		public void WriteXml(XElement elem) {
 			foreach (var prop in properties) {
 				XObject target = elem.XPath<XObject>(prop.XPath).SingleOrDefault();
 
 				object value = prop.Info.GetValue(this, null);
-				if (value == null)
+				if (value == null || value.Equals(""))
 					Remove(target);
 				else {
 					if (target == null)	//If we actually have a value, make sure the target element/attribute actually exists.
@@ -72,17 +81,21 @@ namespace Configurator {
 
 					if (prop.IsComplexProperty)
 						((ConfigObject)prop.Info.GetValue(this, null)).WriteXml((XElement)target);
-					else
-						SetValue(target, value.ToString());
+					else if (value is XElement)
+						SetValue(target, value.ToString(), prop.EmbedXml);
 				}
 			}
 		}
-		static void SetValue(XObject target, string value) {
-			var attr = target as XAttribute;
-			if (attr != null)
-				attr.Value = value;
+		static void SetValue(XObject target, string value, bool asXml) {
+			var elem = target as XElement;
+			if (asXml) {
+				elem.Elements().Remove();
+				if (!String.IsNullOrEmpty(value))
+					elem.Add(XElement.Parse(value, LoadOptions.PreserveWhitespace));
+			} else if (elem != null)
+				elem.Value = value;
 			else
-				((XElement)target).Value = value;
+				((XAttribute)target).Value = value;
 		}
 		static void Remove(XObject target) {
 			if (target == null)
@@ -126,6 +139,9 @@ namespace Configurator {
 	sealed class ConfigPropertyAttribute : Attribute {
 		///<summary>Gets the XPath to the XML element/attribute that stores that value.</summary>
 		public string XPath { get; private set; }
+
+		///<summary>Indicates whether the value of this property should be written directly as an XML element (without being encoded).</summary>
+		public bool EmbedXml { get; set; }
 
 		public ConfigPropertyAttribute(string xpath) { XPath = xpath; }
 	}
