@@ -18,7 +18,7 @@ namespace Configurator.Schema {
 		[ConfigProperty("Updates/@Path")]
 		public string UpdatePath { get; set; }
 		[ConfigProperty("Updates/Cryptography/FileDecryptor")]
-		public CryptoKey UpdateFileskey { get;private set; }
+		public CryptoKey UpdateFileskey { get; private set; }
 		[ConfigProperty("Updates/Cryptography/UpdateVerifier", EmbedXml = true)]
 		public string UpdateSigningKey { get; set; }
 
@@ -35,5 +35,10 @@ namespace Configurator.Schema {
 
 		[ConfigProperty("POP3/Gmail")]
 		public PopConfig Pop { get; private set; }
+
+		//TODO: Zmanim
+
+		[ConfigProperty("Schedules")]
+		public ScheduleConfig Schedules { get; private set; }
 	}
 }

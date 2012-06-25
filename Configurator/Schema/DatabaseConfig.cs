@@ -9,5 +9,8 @@ namespace Configurator.Schema {
 		public string Type { get; set; }
 		[ConfigProperty("ConnectionString")]
 		public string ConnectionString { get; set; }
+
+		[ConfigProperty("Backup/@Path")]
+		public string BackupPath { get; set; }
 	}
 }

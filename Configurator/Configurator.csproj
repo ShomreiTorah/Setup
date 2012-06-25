@@ -58,6 +58,7 @@
     <Compile Include="Schema\DatabaseConfig.cs" />
     <Compile Include="Schema\FtpConfig.cs" />
     <Compile Include="Schema\PopConfig.cs" />
+    <Compile Include="Schema\ScheduleConfig.cs" />
     <Compile Include="Schema\SmtpConfig.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
