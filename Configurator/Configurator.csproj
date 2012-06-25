@@ -53,6 +53,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Schema\ConfigRoot.cs" />
+    <Compile Include="Schema\DatabaseConfig.cs" />
+    <Compile Include="Schema\FtpConfig.cs" />
+    <Compile Include="Schema\PopConfig.cs" />
+    <Compile Include="Schema\SmtpConfig.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

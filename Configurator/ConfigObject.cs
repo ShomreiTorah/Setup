@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,15 +14,27 @@ namespace Configurator {
 			public Property(PropertyInfo prop) {
 				Info = prop;
 				XPath = ((ConfigPropertyAttribute)prop.GetCustomAttributes(typeof(ConfigPropertyAttribute), true)[0]).XPath;
+
+				IsComplexProperty = typeof(ConfigObject).IsAssignableFrom(prop.PropertyType);
+
+				Debug.Assert(IsComplexProperty == (prop.CanWrite), "Only complex properties should be read-only");
+				if (IsComplexProperty)
+					Debug.Assert(!XPath.Contains("@"), "Complex properties cannot be mapped to XML attributes");
 			}
 
 			public string XPath { get; private set; }
 			public PropertyInfo Info { get; private set; }
+
+			public bool IsComplexProperty { get; private set; }
 		}
 		readonly ICollection<Property> properties;
 
 		protected ConfigObject() {
 			properties = Array.ConvertAll(GetType().GetProperties(), p => new Property(p));
+
+			//Initialize child properties so that child classes don't need constructors.
+			foreach (var cp in properties.Where(p => p.IsComplexProperty))
+				cp.Info.SetValue(this, Activator.CreateInstance(cp.Info.PropertyType), null);
 		}
 
 		///<summary>Populates this instance from an XML element.</summary>
@@ -31,7 +44,7 @@ namespace Configurator {
 
 				//If the node is null, clear the property.
 				//If it's a complex property, recursively clear it.
-				if (typeof(ConfigObject).IsAssignableFrom(prop.Info.PropertyType))
+				if (prop.IsComplexProperty)
 					((ConfigObject)prop.Info.GetValue(this, null)).ReadXml((XElement)node ?? new XElement("Null"));
 				else if (node == null)
 					prop.Info.SetValue(this, null, null);
@@ -57,7 +70,7 @@ namespace Configurator {
 					if (target == null)	//If we actually have a value, make sure the target element/attribute actually exists.
 						target = EnsureNode(elem, prop.XPath);
 
-					if (typeof(ConfigObject).IsAssignableFrom(prop.Info.PropertyType))
+					if (prop.IsComplexProperty)
 						((ConfigObject)prop.Info.GetValue(this, null)).WriteXml((XElement)target);
 					else
 						SetValue(target, value.ToString());
