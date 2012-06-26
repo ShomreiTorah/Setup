@@ -36,7 +36,7 @@ namespace Configurator.Schema {
 		public FtpConfig Ftp { get; private set; }
 
 		///<summary>Select the SMTP server used to send ordinary messages.</summary>
-		[ConfigProperty("SMTP/Default")]
+		[ConfigProperty("SMTP/@Default")]
 		public string DefaultSmtp { get; set; }
 
 		///<summary>Enter the connection settings for the (typically-) Gmail-based SMTP server.  This server can be used to send ordinary messages and log them in Gmail's Sent folders.</summary>

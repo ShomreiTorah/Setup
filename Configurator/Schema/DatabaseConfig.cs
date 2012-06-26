@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Configurator.Schema {
 	class DatabaseConfig : ConfigObject {
-		[ConfigProperty("Type")]
+		[ConfigProperty("@Type")]
 		public string Type { get; set; }
-		[ConfigProperty("ConnectionString")]
+		[ConfigProperty("@ConnectionString")]
 		public string ConnectionString { get; set; }
 
 		[ConfigProperty("Backup/@Path")]
