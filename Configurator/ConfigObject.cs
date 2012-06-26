@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace Configurator {
 
 				IsComplexProperty = typeof(ConfigObject).IsAssignableFrom(prop.PropertyType);
 
-				Debug.Assert(IsComplexProperty == (prop.CanWrite), "Only complex properties should be read-only");
+				Debug.Assert(IsComplexProperty == (prop.GetSetMethod() == null), "Only complex properties should be read-only\r\n" + prop);
 				if (IsComplexProperty)
-					Debug.Assert(!XPath.Contains("@"), "Complex properties cannot be mapped to XML attributes");
+					Debug.Assert(!XPath.Contains("@"), "Complex properties cannot be mapped to XML attributes\r\n" + prop);
 			}
 
 			///<summary>Indicates whether the value of this property should be written directly as an XML element (without being encoded).</summary>
@@ -131,7 +132,7 @@ namespace Configurator {
 
 	static class XPathExtensions {
 		public static IEnumerable<T> XPath<T>(this XNode node, string xpath) {
-			return (IEnumerable<T>)node.XPathEvaluate(xpath);
+			return ((IEnumerable)node.XPathEvaluate(xpath)).Cast<T>();
 		}
 	}
 
