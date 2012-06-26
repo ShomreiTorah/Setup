@@ -60,6 +60,7 @@
     <Compile Include="Schema\PopConfig.cs" />
     <Compile Include="Schema\ScheduleConfig.cs" />
     <Compile Include="Schema\SmtpConfig.cs" />
+    <Compile Include="Schema\ZmanimConfig.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

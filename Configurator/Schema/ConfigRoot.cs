@@ -36,7 +36,8 @@ namespace Configurator.Schema {
 		[ConfigProperty("POP3/Gmail")]
 		public PopConfig Pop { get; private set; }
 
-		//TODO: Zmanim
+		[ConfigProperty("Zmanim")]
+		public ZmanimConfig Zmanim { get; private set; }
 
 		[ConfigProperty("Schedules")]
 		public ScheduleConfig Schedules { get; private set; }
