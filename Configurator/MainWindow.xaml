@@ -3,6 +3,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Configurator"
+        xmlns:controls="clr-namespace:Configurator.Controls"
         Closing="MainWindow_Closing"
         Title="MainWindow" Height="350" Width="525">
     <DockPanel>
@@ -71,7 +72,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <local:HelpBox MemberName="ConfigRoot.Ftp" Grid.ColumnSpan="2" Margin="0 0 0 10" />
+                    <controls:HelpBox MemberName="ConfigRoot.Ftp" Grid.ColumnSpan="2" Margin="0 0 0 10" />
 
                     <Label   Grid.Row="1">FTP Server</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Ftp.Server}" />

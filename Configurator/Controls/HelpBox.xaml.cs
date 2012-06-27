@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.IO;
 using System.Xml.Linq;
 
-namespace Configurator {
+namespace Configurator.Controls {
 	/// <summary>
 	/// Interaction logic for HelpBox.xaml
 	/// </summary>
@@ -21,8 +21,6 @@ namespace Configurator {
 		public HelpBox() {
 			InitializeComponent();
 		}
-
-
 
 		public string MemberName {
 			get { return (string)GetValue(MemberNameProperty); }

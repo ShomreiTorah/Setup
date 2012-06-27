@@ -12,7 +12,7 @@ namespace Configurator {
 	/// </summary>
 	partial class App : Application {
 		static App() {
-			ExePath = typeof(HelpBox).Assembly.Location;
+			ExePath = typeof(App).Assembly.Location;
 #if DEBUG
 			//In the VS designer, the EXE is copied to a temp folder, without the XML comments file.
 			//However, I want to load ShomreiTorahConfig and the XML doc file from the source tree in the VS designer.

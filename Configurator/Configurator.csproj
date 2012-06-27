@@ -60,7 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="ConfigFiles.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="HelpBox.xaml.cs">
+    <Compile Include="Controls\HelpBox.xaml.cs">
       <DependentUpon>HelpBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\ExePath.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="Schema\ScheduleConfig.cs" />
     <Compile Include="Schema\SmtpConfig.cs" />
     <Compile Include="Schema\ZmanimConfig.cs" />
-    <Page Include="HelpBox.xaml">
+    <Page Include="Controls\HelpBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
