@@ -41,9 +41,9 @@ namespace Configurator {
 				box.text.Text = null;
 			else {
 				if (!memberName.StartsWith("Configurator."))
-					memberName = "Configurator." + memberName;
-				box.text.Text = docComments.Root.Element("Members")
-												.Elements("Member")
+					memberName = "Configurator.Schema." + memberName;
+				box.text.Text = docComments.Root.Element("members")
+												.Elements("member")
 												.First(m => m.Attribute("name").Value.EndsWith(":" + memberName))
 												.Element("summary")
 												.Value;
