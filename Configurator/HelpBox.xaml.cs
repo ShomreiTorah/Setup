@@ -32,7 +32,7 @@ namespace Configurator {
 		public static readonly DependencyProperty MemberNameProperty =
 			DependencyProperty.Register("MemberName", typeof(string), typeof(HelpBox), new PropertyMetadata(MemberNameChanged));
 
-		static readonly XDocument docComments = XDocument.Load(Path.ChangeExtension(typeof(HelpBox).Assembly.Location, ".xml"));
+		static readonly XDocument docComments = XDocument.Load(Path.ChangeExtension(App.ExePath, ".xml"));
 
 		static void MemberNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
 			var box = (HelpBox)d;

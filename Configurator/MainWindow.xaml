@@ -2,6 +2,7 @@
         Icon="App.ico"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Configurator"
         Title="MainWindow" Height="350" Width="525">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
@@ -24,7 +25,7 @@
                 </Button>
             </StackPanel>
             <Separator />
-            <StackPanel IsEnabled="{Binding HasEnvironmentLocations, RelativeSource={RelativeSource Self}}">
+            <StackPanel IsEnabled="{x:Static local:App.HasEnvironmentLocations}">
                 <Button Click="OpenDebug_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Open the standard debug config file from the source tree">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Icons/Open16.png" SnapsToDevicePixels="True" Width="16" />
@@ -39,7 +40,7 @@
                 </Button>
             </StackPanel>
             <Separator />
-            <StackPanel IsEnabled="{Binding HasEnvironmentLocations, RelativeSource={RelativeSource Self}}">
+            <StackPanel IsEnabled="{x:Static local:App.HasEnvironmentLocations}">
                 <Button Click="OpenProduction_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Open the standard production config file from the source tree">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Icons/Open16.png" SnapsToDevicePixels="True" Width="16" />
@@ -54,6 +55,26 @@
                 </Button>
             </StackPanel>
         </ToolBar>
-        <TabControl Name="tabs"></TabControl>
+        <TabControl Name="tabs" DataContext="{x:Static local:MainWindow.DesignerSample}">
+            <TabItem Header="FTP">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <local:HelpBox MemberName="ConfigRoot.Ftp" Grid.ColumnSpan="2" Margin="0 0 0 10" />
+
+                    <Label Grid.Row="1">FTP Server</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Ftp.Server}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>

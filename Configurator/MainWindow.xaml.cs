@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Xml.Linq;
 using Microsoft.Win32;
 
@@ -19,29 +9,33 @@ namespace Configurator {
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	partial class MainWindow : Window {
-		///<summary>Gets the root directory containing the git repo tree.</summary>
-		///<remarks>This directory contains the Config folder.</remarks>
-		readonly string sourceRoot;
+
+		#region Designer Support
+		//This is data-bound in the XAML so that I can get design-time data-binding help
+		public static readonly Schema.ConfigRoot DesignerSample = OpenDesignerFile();
+
+		static Schema.ConfigRoot OpenDesignerFile() {
+			var retVal = new Schema.ConfigRoot();
+#if DEBUG
+			if (App.SourceRoot != null) {
+				var path = Path.Combine(App.SourceRoot, @"Config\Debug\ShomreiTorahConfig.xml");
+				if (File.Exists(path))
+					retVal.ReadXml(XDocument.Load(path).Root);
+			}
+#endif
+			return retVal;
+		}
+		#endregion
 
 		Schema.ConfigRoot root;
-		public bool HasEnvironmentLocations { get; private set; }
 		public MainWindow() {
 			//This must run before InitializeComponent so that HasLocations can be data-bound.
-			sourceRoot = Path.GetDirectoryName(typeof(MainWindow).Assembly.Location);
-			while (true) {
-				if (string.IsNullOrEmpty(sourceRoot)) {
-					MessageBox.Show("This utility must be run from within the git source tree.\nThe environmental buttons will not work.",
-									"Shomrei Torah Configurator", MessageBoxButton.OK, MessageBoxImage.Warning);
-					HasEnvironmentLocations = false;
-					break;
-				}
-				if (Directory.Exists(Path.Combine(sourceRoot, @"Setup\.git"))) {
-					HasEnvironmentLocations = true;
-					Directory.CreateDirectory(Path.Combine(sourceRoot, @"Config\Debug"));
-					Directory.CreateDirectory(Path.Combine(sourceRoot, @"Config\Production"));
-					break;
-				}
-				sourceRoot = Path.GetDirectoryName(sourceRoot);
+			if (string.IsNullOrEmpty(App.SourceRoot)) {
+				MessageBox.Show("This utility should be run from within the git source tree.\nSince it is now elsewhere, the environmental buttons will not work.",
+								"Shomrei Torah Configurator", MessageBoxButton.OK, MessageBoxImage.Warning);
+			} else {
+				Directory.CreateDirectory(Path.Combine(App.SourceRoot, @"Config\Debug"));
+				Directory.CreateDirectory(Path.Combine(App.SourceRoot, @"Config\Production"));
 			}
 
 			InitializeComponent();
@@ -147,19 +141,19 @@ namespace Configurator {
 		private void Save_Click(object sender, RoutedEventArgs e) { DoSave(); }
 
 		private void OpenDebug_Click(object sender, RoutedEventArgs e) {
-			OpenFile(Path.Combine(sourceRoot, @"Config\Debug\ShomreiTorahConfig.xml"));
+			OpenFile(Path.Combine(App.SourceRoot, @"Config\Debug\ShomreiTorahConfig.xml"));
 		}
 		private void OpenProduction_Click(object sender, RoutedEventArgs e) {
-			OpenFile(Path.Combine(sourceRoot, @"Config\Production\ShomreiTorahConfig.xml"));
+			OpenFile(Path.Combine(App.SourceRoot, @"Config\Production\ShomreiTorahConfig.xml"));
 		}
 
 		private void SaveDebug_Click(object sender, RoutedEventArgs e) {
-			SaveFile(Path.Combine(sourceRoot, @"Config\Debug\ShomreiTorahConfig.xml"));
-			root.CreateDebugDoc().SaveIndent(Path.Combine(sourceRoot, @"Config\Debug\Web.ConnectionStrings.config"));
+			SaveFile(Path.Combine(App.SourceRoot, @"Config\Debug\ShomreiTorahConfig.xml"));
+			root.CreateDebugDoc().SaveIndent(Path.Combine(App.SourceRoot, @"Config\Debug\Web.ConnectionStrings.config"));
 		}
 		private void SaveProduction_Click(object sender, RoutedEventArgs e) {
-			SaveFile(Path.Combine(sourceRoot, @"Config\Production\ShomreiTorahConfig.xml"));
-			root.CreateProductionDoc().SaveIndent(Path.Combine(sourceRoot, @"Config\Production\Web.Release.config"));
+			SaveFile(Path.Combine(App.SourceRoot, @"Config\Production\ShomreiTorahConfig.xml"));
+			root.CreateProductionDoc().SaveIndent(Path.Combine(App.SourceRoot, @"Config\Production\Web.Release.config"));
 		}
 		#endregion
 	}

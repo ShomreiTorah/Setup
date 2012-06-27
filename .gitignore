@@ -1,3 +1,6 @@
+#Ignore generate file
+Configurator/Properties/ExePath.cs
+
 #################
 ## Visual Studio
 #################
