@@ -53,11 +53,11 @@ namespace Configurator {
 							new XAttribute("from", "Alerts@" + config.DomainName),
 							new XAttribute("to", "Dev@" + config.DomainName),
 							new XAttribute("async", "true"),
-							new XAttribute("useSsl", config.Gmail.SSL),
-							new XAttribute("smtpPort", config.Gmail.Port),
-							new XAttribute("smtpServer", config.Gmail.Server),
+							new XAttribute("useSsl", config.GmailSmtp.SSL),
+							new XAttribute("smtpPort", config.GmailSmtp.Port),
+							new XAttribute("smtpServer", config.GmailSmtp.Server),
 							new XAttribute("userName", "Alerts@" + config.DomainName),
-							new XAttribute("password", config.Gmail.Password),
+							new XAttribute("password", config.GmailSmtp.Password),
 							new XAttribute(xdt + "Transform", "SetAttributes")
 						)
 					),

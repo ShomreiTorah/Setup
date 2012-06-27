@@ -37,14 +37,14 @@ namespace Configurator.Schema {
 
 		///<summary>Select the SMTP server used to send ordinary messages.</summary>
 		[ConfigProperty("SMTP/@Default")]
-		public string DefaultSmtp { get; set; }
+		public string SmtpDefault { get; set; }
 
 		///<summary>Enter the connection settings for the (typically-) Gmail-based SMTP server.  This server can be used to send ordinary messages and log them in Gmail's Sent folders.</summary>
 		[ConfigProperty("SMTP/Gmail")]
-		public SmtpConfig Gmail { get; private set; }
+		public SmtpConfig GmailSmtp { get; private set; }
 		///<summary>Enter the connection settings for the externally hosted SMTP server.  This server is used to send messages and statements to the mailing list; it must be capable of delivering large quantities of mail.  (which Gmail cannot)</summary>
 		[ConfigProperty("SMTP/Hosted")]
-		public SmtpConfig Hosted { get; private set; }
+		public SmtpConfig HostedSmtp { get; private set; }
 
 		///<summary>Enter the connection settings for the POP3 server that receives incoming messages.  This is used by the EmailCommand system (only).</summary>
 		[ConfigProperty("POP3/Gmail")]

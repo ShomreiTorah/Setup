@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:Configurator"
         xmlns:controls="clr-namespace:Configurator.Controls"
         Closing="MainWindow_Closing"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="525">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
             <Button Click="New_Click" ToolTip="Create an empty unsaved config file">
@@ -58,6 +58,41 @@
             </StackPanel>
         </ToolBar>
         <TabControl Name="tabs" DataContext="{x:Static local:MainWindow.DesignerSample}">
+            <TabItem Header="SMTP">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <controls:HelpBox MemberName="ConfigRoot.SmtpDefault" Grid.ColumnSpan="2" Margin="0 0 0 10" />
+
+                    <Label    Grid.Row="1">Default SMTP server:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Text="{Binding SmtpDefault}">
+                        <ComboBoxItem>Hosted</ComboBoxItem> 
+                        <ComboBoxItem>Gmail</ComboBoxItem>
+                    </ComboBox>
+
+                    <TabControl Grid.Row="2" Grid.ColumnSpan="2">
+                        <TabItem Header="Gmail">
+                            <DockPanel>
+                                <controls:HelpBox MemberName="ConfigRoot.GmailSmtp" DockPanel.Dock="Top" />
+                                <controls:SmtpSettings DataContext="{Binding GmailSmtp, Mode=OneWay}" />
+                            </DockPanel>
+                        </TabItem>
+                        <TabItem Header="Hosted">
+                            <DockPanel>
+                                <controls:HelpBox MemberName="ConfigRoot.HostedSmtp" DockPanel.Dock="Top" />
+                                <controls:SmtpSettings DataContext="{Binding HostedSmtp, Mode=OneWay}" />
+                            </DockPanel>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
             <TabItem Header="FTP">
                 <Grid>
                     <Grid.ColumnDefinitions>
