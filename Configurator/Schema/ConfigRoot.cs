@@ -46,7 +46,7 @@ namespace Configurator.Schema {
 		[ConfigProperty("SMTP/Hosted")]
 		public SmtpConfig HostedSmtp { get; private set; }
 
-		///<summary>Enter the connection settings for the POP3 server that receives incoming messages.  This is used by the EmailCommand system (only).</summary>
+		///<summary>Enter the connection settings for the POP3 server that receives incoming messages.  This is used by the EmailCommand system (only), which will read &amp; delete mail sent to the address specified in Commands recipient.</summary>
 		[ConfigProperty("POP3/Gmail")]
 		public PopConfig Pop { get; private set; }
 

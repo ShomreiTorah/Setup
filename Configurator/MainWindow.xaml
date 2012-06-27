@@ -122,6 +122,39 @@
                     <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding Ftp.SSL}" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
+            <TabItem Header="POP3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <controls:HelpBox MemberName="ConfigRoot.Pop" Grid.ColumnSpan="2" Margin="0 0 0 10" />
+
+                    <Label   Grid.Row="1">Email Server</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Pop.Server}" />
+
+                    <Label   Grid.Row="2">Port</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Pop.Port}" />
+
+                    <Label   Grid.Row="3">Commands recipient</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Pop.CommandsAddress}" />
+
+                    <Label   Grid.Row="4">Password</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Pop.Password}" />
+
+                    <Label    Grid.Row="5">Use SSL?</Label>
+                    <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding Pop.SSL}" VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
             <TabItem Header="זמנים">
                 <Grid>
                     <Grid.ColumnDefinitions>

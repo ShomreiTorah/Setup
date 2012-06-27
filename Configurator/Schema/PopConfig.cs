@@ -19,5 +19,5 @@ namespace Configurator.Schema {
 
 		[ConfigProperty("@CommandsAddress")]
 		public string CommandsAddress { get; set; }
-}
+	}
 }
