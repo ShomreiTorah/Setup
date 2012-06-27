@@ -82,7 +82,7 @@ namespace Configurator {
 
 					if (prop.IsComplexProperty)
 						((ConfigObject)prop.Info.GetValue(this, null)).WriteXml((XElement)target);
-					else if (value is XElement)
+					else 
 						SetValue(target, value.ToString(), prop.EmbedXml);
 				}
 			}
@@ -92,7 +92,7 @@ namespace Configurator {
 			if (asXml) {
 				elem.Elements().Remove();
 				if (!String.IsNullOrEmpty(value))
-					elem.Add(XElement.Parse(value, LoadOptions.PreserveWhitespace));
+					elem.Add(XElement.Parse(value));
 			} else if (elem != null)
 				elem.Value = value;
 			else
@@ -120,7 +120,7 @@ namespace Configurator {
 			}
 
 			if (xpath[0] == '@')
-				result = new XAttribute(xpath.Remove(1), "Something is wrong; this value was not set.");
+				result = new XAttribute(xpath.Substring(1), "Something is wrong; this value was not set.");
 			else
 				result = new XElement(xpath);
 
