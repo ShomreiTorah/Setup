@@ -68,12 +68,22 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <local:HelpBox MemberName="ConfigRoot.Ftp" Grid.ColumnSpan="2" Margin="0 0 0 10" />
 
-                    <Label Grid.Row="1">FTP Server</Label>
+                    <Label   Grid.Row="1">FTP Server</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Ftp.Server}" />
+
+                    <Label   Grid.Row="2">Username</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Ftp.Username}" />
+
+                    <Label   Grid.Row="3">Password</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Ftp.Password}" />
+
+                    <Label   Grid.Row="4">Use SSL?</Label>
+                    <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding Ftp.SSL}" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
         </TabControl>
