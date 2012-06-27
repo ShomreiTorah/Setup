@@ -33,10 +33,11 @@ namespace Configurator {
 
 			public bool IsComplexProperty { get; private set; }
 		}
-		readonly ICollection<Property> properties;
+		readonly Property[] properties;
 
 		protected ConfigObject() {
 			properties = Array.ConvertAll(GetType().GetProperties(), p => new Property(p));
+			Array.Sort(properties, (a, b) => a.Info.Name.CompareTo(b.Info.Name));
 
 			//Initialize child properties so that child classes don't need constructors.
 			foreach (var cp in properties.Where(p => p.IsComplexProperty))
