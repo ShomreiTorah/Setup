@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Configurator.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -55,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfigFiles.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="HelpBox.xaml.cs">
       <DependentUpon>HelpBox.xaml</DependentUpon>
     </Compile>
@@ -107,6 +112,22 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\New32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Open16.png" />
+    <Resource Include="Icons\Save16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\SaveAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\SaveExport16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
