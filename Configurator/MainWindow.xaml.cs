@@ -126,12 +126,17 @@ namespace Configurator {
 			}
 		}
 		void CreateNew() {
+			if (!ConfirmClose())
+				return;
 			CurrentPath = null;
 			root = new Schema.ConfigRoot();
+			SetOriginal();
 			Rebind();
 		}
 
 		private void Open_Click(object sender, RoutedEventArgs e) {
+			if (!ConfirmClose())
+				return;
 			var dialog = new OpenFileDialog { Filter = "XML Files|*.xml|All Files|*", Title = "Open ShomreiTorah Config File" };
 			if (dialog.ShowDialog(this) != true)
 				return;
@@ -141,9 +146,13 @@ namespace Configurator {
 		private void Save_Click(object sender, RoutedEventArgs e) { DoSave(); }
 
 		private void OpenDebug_Click(object sender, RoutedEventArgs e) {
+			if (!ConfirmClose())
+				return;
 			OpenFile(Path.Combine(App.SourceRoot, @"Config\Debug\ShomreiTorahConfig.xml"));
 		}
 		private void OpenProduction_Click(object sender, RoutedEventArgs e) {
+			if (!ConfirmClose())
+				return;
 			OpenFile(Path.Combine(App.SourceRoot, @"Config\Production\ShomreiTorahConfig.xml"));
 		}
 
@@ -156,5 +165,9 @@ namespace Configurator {
 			root.CreateProductionDoc().SaveIndent(Path.Combine(App.SourceRoot, @"Config\Production\Web.Release.config"));
 		}
 		#endregion
+
+		private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+			e.Cancel = !ConfirmClose();
+		}
 	}
 }
