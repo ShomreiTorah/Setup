@@ -73,7 +73,7 @@
 
                     <Label    Grid.Row="1">Default SMTP server:</Label>
                     <ComboBox Grid.Row="1" Grid.Column="1" Text="{Binding SmtpDefault}">
-                        <ComboBoxItem>Hosted</ComboBoxItem> 
+                        <ComboBoxItem>Hosted</ComboBoxItem>
                         <ComboBoxItem>Gmail</ComboBoxItem>
                     </ComboBox>
 
@@ -120,6 +120,38 @@
 
                     <Label   Grid.Row="4">Use SSL?</Label>
                     <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding Ftp.SSL}" VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="זמנים">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <controls:HelpBox MemberName="ConfigRoot.Zmanim" Grid.ColumnSpan="2" Margin="0 0 0 10" />
+
+                    <Label    Grid.Row="1">Default Provider</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Text="{Binding Zmanim.DefaultProvider}">
+                        <ComboBoxItem>Calculator</ComboBoxItem>
+                        <ComboBoxItem>FastCSV</ComboBoxItem>
+                        <ComboBoxItem>Fixed</ComboBoxItem>
+                        <ComboBoxItem>XML</ComboBoxItem>
+                        <ComboBoxItem>OU</ComboBoxItem>
+                    </ComboBox>
+
+                    <Label   Grid.Row="2">Latitude</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Zmanim.Latitude}" />
+
+                    <Label   Grid.Row="3">Longitude</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Zmanim.Longitude}" />
                 </Grid>
             </TabItem>
         </TabControl>
