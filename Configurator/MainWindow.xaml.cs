@@ -53,22 +53,26 @@ namespace Configurator {
 		}
 
 		#region File Management
-		XElement original;
+		XElement original = new XElement("TempContainer");
 		void SetOriginal() {
-			original = new XElement("TempContainer");
+			original = new XElement(original.Name);
 			root.WriteXml(original);
 			original.Trim();
 		}
 		///<summary>Confirms whether the user would like to discard any unsaved changes.</summary>
 		///<returns>True if the user wishes to proceed; false to cancel.</returns>
 		bool ConfirmClose() {
+			if (root == null)
+				return true;
+
 			var comparand = new XElement(original.Name);
 			root.WriteXml(comparand);
 			comparand.Trim();
 			if (XElement.DeepEquals(original, comparand))
 				return true;
 
-			switch (MessageBox.Show("Would you like to save your changes to " + (CurrentPath ?? "this unsaved file") + "?", "Shomrei Torah Configurator", MessageBoxButton.YesNoCancel, MessageBoxImage.Question)) {
+			switch (MessageBox.Show("Would you like to save your changes to " + (CurrentPath ?? "this unsaved file") + "?",
+									"Shomrei Torah Configurator", MessageBoxButton.YesNoCancel, MessageBoxImage.Question)) {
 				case MessageBoxResult.Yes:
 					DoSave();
 					return true;
