@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Common;
 using System.Data.Odbc;
 using System.Data.OleDb;
@@ -29,6 +30,32 @@ namespace Configurator {
 			retVal.ConnectionString = config.ConnectionString;
 			retVal.Open();
 			return retVal;
+		}
+
+
+		///<summary>Creates a DbCommand.</summary>
+		///<param name="connection">The connection to create the command for.</param>
+		///<param name="sql">The SQL of the command.</param>
+		public static DbCommand CreateCommand(this DbConnection connection, string sql) {
+			if (connection == null) throw new ArgumentNullException("connection");
+
+			var retVal = connection.CreateCommand();
+			retVal.CommandText = sql;
+			return retVal;
+		}
+		///<summary>Executes a SQL statement against a connection.</summary>
+		///<param name="connection">The connection to the database.  The connection is not closed.</param>
+		///<param name="sql">The SQL to execute.</param>
+		///<returns>The number of rows affected by the statement.</returns>
+		public static int ExecuteNonQuery(this DbConnection connection, string sql) {
+			using (var command = connection.CreateCommand(sql)) return command.ExecuteNonQuery();
+		}
+		///<summary>Executes a SQL statement against a connection.</summary>
+		///<param name="connection">The connection to the database.  The connection is not closed.</param>
+		///<param name="sql">The SQL to execute.</param>
+		///<returns>A DbDataReader object, which will close its underlying connection when disposed.</returns>
+		public static DbDataReader ExecuteReader(this DbConnection connection, string sql) {
+			return connection.CreateCommand(sql).ExecuteReader();
 		}
 	}
 }
