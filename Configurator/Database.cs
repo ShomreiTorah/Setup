@@ -43,12 +43,28 @@ namespace Configurator {
 			retVal.CommandText = sql;
 			return retVal;
 		}
+
+		///<summary>Creates a DbCommand.</summary>
+		///<param name="transaction">The transaction with a connection to the database.  The connection is not closed.</param>
+		///<param name="sql">The SQL of the command.</param>
+		public static DbCommand CreateCommand(this DbTransaction transaction, string sql) {
+			var command = transaction.Connection.CreateCommand(sql);
+			command.Transaction = transaction;
+			return command;
+		}
 		///<summary>Executes a SQL statement against a connection.</summary>
 		///<param name="connection">The connection to the database.  The connection is not closed.</param>
 		///<param name="sql">The SQL to execute.</param>
 		///<returns>The number of rows affected by the statement.</returns>
 		public static int ExecuteNonQuery(this DbConnection connection, string sql) {
 			using (var command = connection.CreateCommand(sql)) return command.ExecuteNonQuery();
+		}
+		///<summary>Executes a SQL statement against a transaction.</summary>
+		///<param name="transaction">The transaction with a connection to the database.  The connection is not closed.</param>
+		///<param name="sql">The SQL to execute.</param>
+		///<returns>The number of rows affected by the statement.</returns>
+		public static int ExecuteNonQuery(this DbTransaction transaction, string sql) {
+			using (var command = transaction.CreateCommand(sql)) return command.ExecuteNonQuery();
 		}
 		///<summary>Executes a SQL statement against a connection.</summary>
 		///<param name="connection">The connection to the database.  The connection is not closed.</param>

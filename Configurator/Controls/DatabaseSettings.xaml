@@ -38,6 +38,31 @@
         <Label            Grid.Row="4">Backup to</Label>
         <controls:PathBox Grid.Row="4" Grid.Column="1" Text="{Binding BackupPath}" Type="Folder" />
 
+        <Label      Grid.Row="5">Initialize database</Label>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="0,5,0,0">
+            <ListBox Name="scriptsList">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsSelected}" ToolTip="{Binding Description}" Content="{Binding Name}" Margin="0,1,5,0" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                        <Style.Resources>
+                            <!-- SelectedItem with focus -->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                            <!-- SelectedItem without focus -->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                            <!-- SelectedItem text foreground -->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+                        </Style.Resources>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <Button Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Padding="10 2" Click="RunScripts_Click" Margin="8,0,0,0">Execute Selected Scripts</Button>
+        </StackPanel>
 
     </Grid>
 </UserControl>

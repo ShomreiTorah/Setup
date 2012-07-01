@@ -1,30 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Configurator.Controls {
 	/// <summary>
 	/// Interaction logic for DatabaseSettings.xaml
 	/// </summary>
 	partial class DatabaseSettings : UserControl {
+		readonly List<SqlScript> scripts;
+
+		readonly Regex sqlScriptMatcher = new Regex(@"^\d+-");
 		public DatabaseSettings() {
 			InitializeComponent();
+			if (App.HasEnvironmentLocations) {
+				scripts = Directory.EnumerateFiles(Path.Combine(App.SourceRoot, @"Setup\Sql Scripts"), "*.sql")
+								   .Where(p => sqlScriptMatcher.IsMatch(Path.GetFileName(p)))		//Skip Schema Changes.sql
+								   .Select(p => new SqlScript(p))
+								   .ToList();
+				scriptsList.ItemsSource = scripts;
+			}
 		}
 
 		private Schema.DatabaseConfig Config { get { return (Schema.DatabaseConfig)DataContext; } }
 
+		#region Create & Test
 		private void TestConnection_Click(object sender, RoutedEventArgs e) {
 			try {
 				using (var connection = Config.OpenConnection()) {
@@ -69,6 +75,57 @@ namespace Configurator.Controls {
 				MessageBox.Show("Created database " + db);
 			} catch (Exception ex) {
 				MessageBox.Show("An error occurred.\r\n\r\n" + ex.Message);
+			}
+		}
+		#endregion
+
+		class SqlScript {
+			public SqlScript(string path) {
+				FilePath = path;
+				Name = Path.GetFileNameWithoutExtension(FilePath);
+
+				var dash = Name.IndexOf('-');
+				Index = int.Parse(Name.Remove(dash));
+				Name = Name.Substring(dash + 1);
+
+				Description = String.Join(Environment.NewLine,
+					File.ReadLines(FilePath)
+						.TakeWhile(s => s.StartsWith("--"))
+						.Select(s => s.Substring(2))
+				);
+
+				IsSelected = true;		//By default, all scripts are checked
+			}
+
+			public string Name { get; private set; }
+			public string FilePath { get; private set; }
+			public int Index { get; private set; }
+			public string Description { get; private set; }
+
+			public bool IsSelected { get; set; }
+
+			public void Execute(DbTransaction transaction) {
+				transaction.ExecuteNonQuery(File.ReadAllText(FilePath));
+			}
+		}
+
+		private void RunScripts_Click(object sender, RoutedEventArgs e) {
+			using (var connection = Config.OpenConnection())
+			using (var transaction = connection.BeginTransaction()) {
+				string name = null;
+				try {
+					foreach (var script in scripts) {
+						name = script.Name;
+						if (script.IsSelected)
+							script.Execute(transaction);
+					}
+				} catch (Exception ex) {
+					MessageBox.Show("An error occurred while executing " + name + ".\r\n\r\n" + ex.Message);
+					transaction.Rollback();
+					return;
+				}
+
+				transaction.Commit();
 			}
 		}
 	}

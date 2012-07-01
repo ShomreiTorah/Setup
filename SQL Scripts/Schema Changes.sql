@@ -5,7 +5,8 @@
  * this script will not be necessary to fill 
  * a new database from scratch.
  * 
- * Please comment changes with date and purpose
+ * Please comment changes with date and purpose.
+ * This file is not executed by the configurator
  */
 
 ALTER TABLE Data.MasterDirectory ADD [RowVersion] RowVersion;

@@ -3,6 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configurator", "Configurator.csproj", "{398C94C2-E1E2-41E9-AC70-9D7051C51C31}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Scripts", "SQL Scripts", "{55CCB2C8-7146-4B31-BB6A-E8A3B5C2FD58}"
+	ProjectSection(SolutionItems) = preProject
+		..\SQL Scripts\01-Core.sql = ..\SQL Scripts\01-Core.sql
+		..\SQL Scripts\02-Billing.sql = ..\SQL Scripts\02-Billing.sql
+		..\SQL Scripts\03-Schedules.sql = ..\SQL Scripts\03-Schedules.sql
+		..\SQL Scripts\04-Melave Malka.sql = ..\SQL Scripts\04-Melave Malka.sql
+		..\SQL Scripts\05-Create AppServices.sql = ..\SQL Scripts\05-Create AppServices.sql
+		..\SQL Scripts\06-Populate AppServices.sql = ..\SQL Scripts\06-Populate AppServices.sql
+		..\SQL Scripts\07-Website.sql = ..\SQL Scripts\07-Website.sql
+		..\SQL Scripts\08-EmailCommand.sql = ..\SQL Scripts\08-EmailCommand.sql
+		..\SQL Scripts\Schema Changes.sql = ..\SQL Scripts\Schema Changes.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

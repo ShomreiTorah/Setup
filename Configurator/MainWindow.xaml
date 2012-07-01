@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:Configurator"
         xmlns:controls="clr-namespace:Configurator.Controls"
         Closing="MainWindow_Closing"
-        Title="MainWindow" Height="450" Width="525">
+        Title="MainWindow" Height="450" Width="600">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
             <Button Click="New_Click" ToolTip="Create an empty unsaved config file">
