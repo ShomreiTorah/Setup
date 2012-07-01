@@ -5,6 +5,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -105,7 +106,17 @@ namespace Configurator.Controls {
 			public bool IsSelected { get; set; }
 
 			public void Execute(DbTransaction transaction) {
-				transaction.ExecuteNonQuery(File.ReadAllText(FilePath));
+				var lines = File.ReadLines(FilePath);
+				var builder = new StringBuilder();
+
+				foreach (var line in lines) {
+					if (line.Trim().Equals("GO", StringComparison.OrdinalIgnoreCase)) {
+						transaction.ExecuteNonQuery(builder.ToString());
+						builder.Clear();
+					} else
+						builder.AppendLine(line);
+				}
+				transaction.ExecuteNonQuery(builder.ToString());
 			}
 		}
 
