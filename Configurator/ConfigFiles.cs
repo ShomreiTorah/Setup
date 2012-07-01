@@ -18,7 +18,7 @@ namespace Configurator {
 					new XElement("clear"),
 					new XElement("add",
 						new XAttribute("name", "DB"),
-						new XAttribute("connectionString", config.DefaultDB.ConnectionString)		//TODO: Specify providerName=""
+						new XAttribute("connectionString", config.DefaultDb.ConnectionString)		//TODO: Specify providerName=""
 					)
 				)
 			);
@@ -43,7 +43,7 @@ namespace Configurator {
 						new XElement("clear"),
 						new XElement("add",
 							new XAttribute("name", "DB"),
-							new XAttribute("connectionString", config.DefaultDB.ConnectionString),	//TODO: Specify providerName=""
+							new XAttribute("connectionString", config.DefaultDb.ConnectionString),	//TODO: Specify providerName=""
 							new XAttribute(xdt + "Transform", "Insert")
 						)
 					),

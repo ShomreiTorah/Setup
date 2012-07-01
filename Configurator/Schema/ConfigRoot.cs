@@ -17,9 +17,10 @@ namespace Configurator.Schema {
 
 		///<summary>Enter the connection information for the default database used by all Shomrei Torah applications.  This database is used by both the web and client applications, and should be accessible over the internet.</summary>
 		[ConfigProperty("Databases/Default")]
-		public DatabaseConfig DefaultDB { get; private set; }
+		public DatabaseConfig DefaultDb { get; private set; }
+		///<summary>Enter the connection information for the test database.  This is used by the EmailCommand system to send messages to the test list (forwarded from the Commands+SendTest@ address).  It is not used anywhere else.</summary>
 		[ConfigProperty("Databases/Test")]
-		public DatabaseConfig TestDB { get; private set; }
+		public DatabaseConfig TestDb { get; private set; }
 
 		///<summary>Enter the directory on the web server that contains update binaries.  This is also used to upload updates over FTP.  All update files are encrypted.</summary>
 		[ConfigProperty("Updates/@Path")]
