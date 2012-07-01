@@ -31,7 +31,7 @@ GO
 CREATE VIEW Website.PublicPages AS SELECT * FROM Website.Pages WHERE IsListed = 1;
 GO
 
-ALTER PROCEDURE Website.SavePage(
+CREATE PROCEDURE Website.SavePage(
 	@PageName	VARCHAR(256),
 	@Title		NVARCHAR(512),
 	@IsListed	BIT,

@@ -1,6 +1,10 @@
 --This file creates the objects used by the ASP.Net membership system in the Admin site.
 --It has no dependencies.
 
+
+--I commented out all the various roles at the bottom because I don't
+--need them, and since they break the transaction in the configurator
+
 /**********************************************************************/
 /* InstallCommon.SQL                                                  */
 /*                                                                    */
@@ -2218,84 +2222,6 @@ GO
 
 /*************************************************************/
 /*************************************************************/
-
---
---Create Membership roles
---
-
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Membership_FullAccess'  ) )
-EXEC sp_addrole N'aspnet_Membership_FullAccess'
-
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Membership_BasicAccess'  ) )
-EXEC sp_addrole N'aspnet_Membership_BasicAccess'
-
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Membership_ReportingAccess'  ) )
-EXEC sp_addrole N'aspnet_Membership_ReportingAccess'
-GO
-
-EXEC sp_addrolemember N'aspnet_Membership_BasicAccess', N'aspnet_Membership_FullAccess'
-EXEC sp_addrolemember N'aspnet_Membership_ReportingAccess', N'aspnet_Membership_FullAccess'
-GO
-
---
---Stored Procedure rights for BasicAcess
---
-GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByUserId TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByName TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByEmail TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetPassword TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetPasswordWithFormat TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_UpdateUserInfo TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetNumberOfUsersOnline TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Membership_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Membership_BasicAccess
-
---
---Stored Procedure rights for ReportingAccess
---
-GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByUserId TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByName TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByEmail TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetAllUsers TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_GetNumberOfUsersOnline TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_FindUsersByName TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_FindUsersByEmail TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Membership_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Membership_ReportingAccess
-
---
---Additional stored procedure rights for FullAccess
---
-GRANT EXECUTE ON dbo.aspnet_Users_DeleteUser TO aspnet_Membership_FullAccess
-
-GRANT EXECUTE ON dbo.aspnet_Membership_CreateUser TO aspnet_Membership_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_SetPassword TO aspnet_Membership_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_ResetPassword TO aspnet_Membership_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_UpdateUser TO aspnet_Membership_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_ChangePasswordQuestionAndAnswer TO aspnet_Membership_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Membership_UnlockUser TO aspnet_Membership_FullAccess
-
---
---View rights
---
-GRANT SELECT ON dbo.vw_aspnet_Applications TO aspnet_Membership_ReportingAccess
-GRANT SELECT ON dbo.vw_aspnet_Users TO aspnet_Membership_ReportingAccess
-
-GRANT SELECT ON dbo.vw_aspnet_MembershipUsers TO aspnet_Membership_ReportingAccess
-
-/*************************************************************/
-/*************************************************************/
 /*************************************************************/
 /*************************************************************/
 
@@ -2807,69 +2733,6 @@ EXECUTE (@command)
 GO
 
 EXEC [dbo].aspnet_RegisterSchemaVersion N'Profile', N'1', 1, 1
-GO
-
-/*************************************************************/
-/*************************************************************/
-
---
---Create Profile roles
---
-
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Profile_FullAccess' ) )
-EXEC sp_addrole N'aspnet_Profile_FullAccess'
-
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Profile_BasicAccess' ) )
-EXEC sp_addrole N'aspnet_Profile_BasicAccess'
-
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Profile_ReportingAccess' ) )
-EXEC sp_addrole N'aspnet_Profile_ReportingAccess'
-GO
-
-EXEC sp_addrolemember N'aspnet_Profile_BasicAccess', N'aspnet_Profile_FullAccess'
-EXEC sp_addrolemember N'aspnet_Profile_ReportingAccess', N'aspnet_Profile_FullAccess'
-GO
-
---
---Stored Procedure rights for BasicAccess
---
-GRANT EXECUTE ON dbo.aspnet_Profile_GetProperties TO aspnet_Profile_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_Profile_SetProperties TO aspnet_Profile_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Profile_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Profile_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Profile_BasicAccess
-
---
---Stored Procedure rights for ReportingAccess
---
-GRANT EXECUTE ON dbo.aspnet_Profile_GetNumberOfInactiveProfiles TO aspnet_Profile_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Profile_GetProfiles TO aspnet_Profile_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Profile_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Profile_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Profile_ReportingAccess
-
---
---Additional stored procedure rights for FullAccess
---
-GRANT EXECUTE ON dbo.aspnet_Profile_DeleteProfiles TO aspnet_Profile_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Profile_DeleteInactiveProfiles TO aspnet_Profile_FullAccess
-
---
---View rights
---
-GRANT SELECT ON dbo.vw_aspnet_Applications TO aspnet_Profile_ReportingAccess
-GRANT SELECT ON dbo.vw_aspnet_Users TO aspnet_Profile_ReportingAccess
-
-GRANT SELECT ON dbo.vw_aspnet_Profiles TO aspnet_Profile_ReportingAccess
 GO
 
 -------------------------------------------------------------------------
@@ -3913,70 +3776,210 @@ GO
 --Create Role Manager roles
 --
 
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Roles_FullAccess'  ) )
-EXEC sp_addrole N'aspnet_Roles_FullAccess'
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Roles_FullAccess'  ) )
+--EXEC sp_addrole N'aspnet_Roles_FullAccess'
 
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Roles_BasicAccess'  ) )
-EXEC sp_addrole N'aspnet_Roles_BasicAccess'
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Roles_BasicAccess'  ) )
+--EXEC sp_addrole N'aspnet_Roles_BasicAccess'
 
-IF ( NOT EXISTS ( SELECT name
-                  FROM sysusers
-                  WHERE issqlrole = 1
-                  AND name = N'aspnet_Roles_ReportingAccess'  ) )
-EXEC sp_addrole N'aspnet_Roles_ReportingAccess'
-GO
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Roles_ReportingAccess'  ) )
+--EXEC sp_addrole N'aspnet_Roles_ReportingAccess'
+--GO
 
-EXEC sp_addrolemember N'aspnet_Roles_BasicAccess', N'aspnet_Roles_FullAccess'
-EXEC sp_addrolemember N'aspnet_Roles_ReportingAccess', N'aspnet_Roles_FullAccess'
-GO
+--EXEC sp_addrolemember N'aspnet_Roles_BasicAccess', N'aspnet_Roles_FullAccess'
+--EXEC sp_addrolemember N'aspnet_Roles_ReportingAccess', N'aspnet_Roles_FullAccess'
+--GO
 
---
---Stored Procedure rights for BasicAccess
---
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_IsUserInRole TO aspnet_Roles_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_GetRolesForUser TO aspnet_Roles_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Roles_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Roles_BasicAccess
-GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Roles_BasicAccess
+----
+----Stored Procedure rights for BasicAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_IsUserInRole TO aspnet_Roles_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_GetRolesForUser TO aspnet_Roles_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Roles_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Roles_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Roles_BasicAccess
 
---
---Stored Procedure rights for ReportingAccess
---
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_IsUserInRole TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_GetRolesForUser TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Roles_RoleExists TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_GetUsersInRoles TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_FindUsersInRole TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_Roles_GetAllRoles TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Roles_ReportingAccess
-GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Roles_ReportingAccess
+----
+----Stored Procedure rights for ReportingAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_IsUserInRole TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_GetRolesForUser TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Roles_RoleExists TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_GetUsersInRoles TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_FindUsersInRole TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Roles_GetAllRoles TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Roles_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Roles_ReportingAccess
 
---
---Additional stored procedure rights for FullAccess
---
+----
+----Additional stored procedure rights for FullAccess
+----
 
-GRANT EXECUTE ON dbo.aspnet_Roles_CreateRole TO aspnet_Roles_FullAccess
-GRANT EXECUTE ON dbo.aspnet_Roles_DeleteRole TO aspnet_Roles_FullAccess
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_AddUsersToRoles TO aspnet_Roles_FullAccess
-GRANT EXECUTE ON dbo.aspnet_UsersInRoles_RemoveUsersFromRoles TO aspnet_Roles_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Roles_CreateRole TO aspnet_Roles_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Roles_DeleteRole TO aspnet_Roles_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_AddUsersToRoles TO aspnet_Roles_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_UsersInRoles_RemoveUsersFromRoles TO aspnet_Roles_FullAccess
 
---
---View rights
---
-GRANT SELECT ON dbo.vw_aspnet_Applications TO aspnet_Roles_ReportingAccess
-GRANT SELECT ON dbo.vw_aspnet_Users TO aspnet_Roles_ReportingAccess
+----
+----View rights
+----
+--GRANT SELECT ON dbo.vw_aspnet_Applications TO aspnet_Roles_ReportingAccess
+--GRANT SELECT ON dbo.vw_aspnet_Users TO aspnet_Roles_ReportingAccess
 
-GRANT SELECT ON dbo.vw_aspnet_Roles TO aspnet_Roles_ReportingAccess
-GRANT SELECT ON dbo.vw_aspnet_UsersInRoles TO aspnet_Roles_ReportingAccess
+--GRANT SELECT ON dbo.vw_aspnet_Roles TO aspnet_Roles_ReportingAccess
+--GRANT SELECT ON dbo.vw_aspnet_UsersInRoles TO aspnet_Roles_ReportingAccess
 
-GO
+--GO
+
+--/*************************************************************/
+--/*************************************************************/
+
+----
+----Create Membership roles
+----
+
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Membership_FullAccess'  ) )
+--EXEC sp_addrole N'aspnet_Membership_FullAccess'
+
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Membership_BasicAccess'  ) )
+--EXEC sp_addrole N'aspnet_Membership_BasicAccess'
+
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Membership_ReportingAccess'  ) )
+--EXEC sp_addrole N'aspnet_Membership_ReportingAccess'
+--GO
+
+--EXEC sp_addrolemember N'aspnet_Membership_BasicAccess', N'aspnet_Membership_FullAccess'
+--EXEC sp_addrolemember N'aspnet_Membership_ReportingAccess', N'aspnet_Membership_FullAccess'
+--GO
+
+----
+----Stored Procedure rights for BasicAcess
+----
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByUserId TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByName TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByEmail TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetPassword TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetPasswordWithFormat TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_UpdateUserInfo TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetNumberOfUsersOnline TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Membership_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Membership_BasicAccess
+
+----
+----Stored Procedure rights for ReportingAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByUserId TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByName TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetUserByEmail TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetAllUsers TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_GetNumberOfUsersOnline TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_FindUsersByName TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_FindUsersByEmail TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Membership_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Membership_ReportingAccess
+
+----
+----Additional stored procedure rights for FullAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_Users_DeleteUser TO aspnet_Membership_FullAccess
+
+--GRANT EXECUTE ON dbo.aspnet_Membership_CreateUser TO aspnet_Membership_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_SetPassword TO aspnet_Membership_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_ResetPassword TO aspnet_Membership_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_UpdateUser TO aspnet_Membership_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_ChangePasswordQuestionAndAnswer TO aspnet_Membership_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Membership_UnlockUser TO aspnet_Membership_FullAccess
+
+----
+----View rights
+----
+--GRANT SELECT ON dbo.vw_aspnet_Applications TO aspnet_Membership_ReportingAccess
+--GRANT SELECT ON dbo.vw_aspnet_Users TO aspnet_Membership_ReportingAccess
+
+--GRANT SELECT ON dbo.vw_aspnet_MembershipUsers TO aspnet_Membership_ReportingAccess
+
+--/*************************************************************/
+--/*************************************************************/
+
+----
+----Create Profile roles
+----
+
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Profile_FullAccess' ) )
+--EXEC sp_addrole N'aspnet_Profile_FullAccess'
+
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Profile_BasicAccess' ) )
+--EXEC sp_addrole N'aspnet_Profile_BasicAccess'
+
+--IF ( NOT EXISTS ( SELECT name
+--                  FROM sysusers
+--                  WHERE issqlrole = 1
+--                  AND name = N'aspnet_Profile_ReportingAccess' ) )
+--EXEC sp_addrole N'aspnet_Profile_ReportingAccess'
+--GO
+
+--EXEC sp_addrolemember N'aspnet_Profile_BasicAccess', N'aspnet_Profile_FullAccess'
+--EXEC sp_addrolemember N'aspnet_Profile_ReportingAccess', N'aspnet_Profile_FullAccess'
+--GO
+
+----
+----Stored Procedure rights for BasicAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_Profile_GetProperties TO aspnet_Profile_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_Profile_SetProperties TO aspnet_Profile_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Profile_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Profile_BasicAccess
+--GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Profile_BasicAccess
+
+----
+----Stored Procedure rights for ReportingAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_Profile_GetNumberOfInactiveProfiles TO aspnet_Profile_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_Profile_GetProfiles TO aspnet_Profile_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_CheckSchemaVersion TO aspnet_Profile_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_RegisterSchemaVersion TO aspnet_Profile_ReportingAccess
+--GRANT EXECUTE ON dbo.aspnet_UnRegisterSchemaVersion TO aspnet_Profile_ReportingAccess
+
+----
+----Additional stored procedure rights for FullAccess
+----
+--GRANT EXECUTE ON dbo.aspnet_Profile_DeleteProfiles TO aspnet_Profile_FullAccess
+--GRANT EXECUTE ON dbo.aspnet_Profile_DeleteInactiveProfiles TO aspnet_Profile_FullAccess
+
+----
+----View rights
+----
+--GRANT SELECT ON dbo.vw_aspnet_Applications TO aspnet_Profile_ReportingAccess
+--GRANT SELECT ON dbo.vw_aspnet_Users TO aspnet_Profile_ReportingAccess
+
+--GRANT SELECT ON dbo.vw_aspnet_Profiles TO aspnet_Profile_ReportingAccess
 
 /*************************************************************/
 /*************************************************************/

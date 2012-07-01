@@ -2,7 +2,7 @@
 --It depends on Create AppServices.
 
 DECLARE @ApplicationId uniqueidentifier
-EXEC dbo.aspnet_Applications_CreateApplication @ApplicationName, @ApplicationId OUTPUT
+EXEC dbo.aspnet_Applications_CreateApplication 'ShomreiTorah-Admin', @ApplicationId OUTPUT
 
 --I don't use the aspnet_Roles_CreateRole sproc because I want to create descriptions
 INSERT INTO dbo.aspnet_Roles (ApplicationId, RoleName, LoweredRoleName, Description)
