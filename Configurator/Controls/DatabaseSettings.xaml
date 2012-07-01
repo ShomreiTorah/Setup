@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:Configurator.Controls"
              DataContext="{Binding Source={x:Static local:MainWindow.DesignerSample}, Path=DefaultDb}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="700">
+             d:DesignHeight="300" d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -26,7 +26,7 @@
         <ComboBox Grid.Row="0" Grid.Column="1" Text="{Binding Type}" ItemsSource="{x:Static local:Database.Types}" />
 
         <Label   Grid.Row="1">Connection String</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ConnectionString}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ConnectionString}" TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button HorizontalAlignment="Right" Padding="10 2" Click="CreateDb_Click">Create Database</Button>
