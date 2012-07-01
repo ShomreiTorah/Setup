@@ -32,7 +32,13 @@ namespace Configurator.Controls {
 						 .Cast<IDataRecord>()
 						 .Select(dr => dr.GetString(0));
 
-					MessageBox.Show("Connection succeeded.\r\nTables:\r\n\r\n  • " + String.Join("\r\n  • ", tables));
+					var allTables = String.Join("\r\n  • ", tables);
+					if (String.IsNullOrEmpty(allTables))
+						allTables = "Database has no tables";
+					else
+						allTables = "Tables:\r\n\r\n  • " + allTables;
+
+					MessageBox.Show("Connection succeeded.\r\n" + allTables);
 				}
 			} catch (Exception ex) {
 				MessageBox.Show("Connection failed.\r\n\r\n" + ex.Message);
