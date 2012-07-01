@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Configurator.Controls.SmtpSettings"
+﻿<UserControl x:Class="Configurator.Controls.SmtpSettings" x:ClassModifier="internal"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

@@ -16,7 +16,7 @@ namespace Configurator.Controls {
 	/// <summary>
 	/// Interaction logic for SmtpSettings.xaml
 	/// </summary>
-	public partial class SmtpSettings : UserControl {
+	partial class SmtpSettings : UserControl {
 		public SmtpSettings() {
 			InitializeComponent();
 		}
