@@ -1,4 +1,7 @@
-﻿IF schema_id('Website') IS NULL
+﻿--This file creates the objects used by the website and admin site.
+--It depends on Core and Billing.
+
+IF schema_id('Website') IS NULL
 	EXECUTE('create schema Website');
       
 CREATE TABLE Website.Pages (
@@ -88,22 +91,7 @@ CREATE VIEW Website.SSSponsors AS
 	ORDER BY Modified;
 GO
 --------------------------------------------------------------------------------------------
-
-CREATE TABLE dbo.tblMLMembers(
-	Mail_ID			INT					NOT NULL	IDENTITY(1,1) PRIMARY KEY,
-	[Name]			NVARCHAR(100)		COLLATE SQL_Latin1_General_CP1_CI_AS	NULL,
-	Email			NVARCHAR(100)		COLLATE SQL_Latin1_General_CP1_CI_AS	NOT NULL,
-	ID_Code			NVARCHAR(20)		COLLATE SQL_Latin1_General_CP1_CI_AS	NULL,
-	Password		NVARCHAR(50)		COLLATE SQL_Latin1_General_CP1_CI_AS	NULL,
-	Salt			NVARCHAR(30)		COLLATE SQL_Latin1_General_CP1_CI_AS	NULL,
-	Active			BIT					NOT NULL	DEFAULT (0),
-	Join_Date		DATETIME			NOT NULL	DEFAULT (getdate()),
-	HTMLformat		BIT					NOT	NULL	DEFAULT (0),
-	PersonId		UNIQUEIDENTIFIER	NULL		REFERENCES Data.MasterDirectory(Id),
-	[RowId]			UNIQUEIDENTIFIER	NOT NULL	ROWGUIDCOL UNIQUE DEFAULT(newid()),
-	[RowVersion]	RowVersion
-);
-
+--This table maintains backwards compatibility with our very old WebWiz system
 CREATE TABLE dbo.tblMLNewsletter (
 	Newsletter_ID		INT				NOT NULL IDENTITY(1,1)	PRIMARY KEY,
 	Newsletter			NTEXT			NOT NULL,
@@ -119,4 +107,4 @@ GO
 CREATE VIEW UserNamesInRoles AS
 	SELECT dbo.aspnet_UsersInRoles.UserId, dbo.aspnet_UsersInRoles.RoleId, dbo.aspnet_Users.UserName
 	FROM   dbo.aspnet_Users INNER JOIN dbo.aspnet_UsersInRoles 
-		ON dbo.aspnet_Users.UserId  =  dbo.aspnet_UsersInRoles.UserId
+		ON dbo.aspnet_Users.UserId = dbo.aspnet_UsersInRoles.UserId

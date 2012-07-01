@@ -1,3 +1,6 @@
+--This file creates the objects used by the ASP.Net membership system in the Admin site.
+--It has no dependencies.
+
 /**********************************************************************/
 /* InstallCommon.SQL                                                  */
 /*                                                                    */

@@ -1,3 +1,7 @@
+--This file creates the tables used by Schedulizer 
+--(this is also used by the website)
+--It has no dependencies.
+
 IF schema_id('Schedules') IS NULL
 	EXECUTE('create schema Schedules');
 

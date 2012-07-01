@@ -1,4 +1,8 @@
-﻿IF schema_id('MelaveMalka') IS NULL
+﻿--This file creates the tables used by the Melave Malka system 
+--(in the Billing and Journal applications)
+--It depends on Core and Billing.
+
+IF schema_id('MelaveMalka') IS NULL
 	EXECUTE('create schema MelaveMalka');
 
 CREATE TABLE MelaveMalka.MelaveMalkaInfo (
