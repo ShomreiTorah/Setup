@@ -10,6 +10,7 @@ namespace Configurator.Schema {
 		[ConfigProperty("@ConnectionString")]
 		public string ConnectionString { get; set; }
 
+		///<summary>Enter the folder to store local backups of the database (as gzip-ed XML).  This optional setting is used by ShomreiTorah.Backup in Utilities.</summary>
 		[ConfigProperty("Backup/@Path")]
 		public string BackupPath { get; set; }
 	}

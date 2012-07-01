@@ -58,6 +58,22 @@
             </StackPanel>
         </ToolBar>
         <TabControl Name="tabs" DataContext="{x:Static local:MainWindow.DesignerSample}">
+            <TabItem Header="Databases">
+                <TabControl>
+                    <TabItem Header="Default">
+                        <DockPanel>
+                            <controls:HelpBox MemberName="ConfigRoot.DefaultDb" DockPanel.Dock="Top" />
+                            <controls:DatabaseSettings DataContext="{Binding DefaultDb}" />
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Test">
+                        <DockPanel>
+                            <controls:HelpBox MemberName="ConfigRoot.TestDb" DockPanel.Dock="Top" />
+                            <controls:DatabaseSettings DataContext="{Binding TestDb}" />
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
             <TabItem Header="SMTP">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -81,13 +97,13 @@
                         <TabItem Header="Gmail">
                             <DockPanel>
                                 <controls:HelpBox MemberName="ConfigRoot.GmailSmtp" DockPanel.Dock="Top" />
-                                <controls:SmtpSettings DataContext="{Binding GmailSmtp, Mode=OneWay}" />
+                                <controls:SmtpSettings DataContext="{Binding GmailSmtp}" />
                             </DockPanel>
                         </TabItem>
                         <TabItem Header="Hosted">
                             <DockPanel>
                                 <controls:HelpBox MemberName="ConfigRoot.HostedSmtp" DockPanel.Dock="Top" />
-                                <controls:SmtpSettings DataContext="{Binding HostedSmtp, Mode=OneWay}" />
+                                <controls:SmtpSettings DataContext="{Binding HostedSmtp}" />
                             </DockPanel>
                         </TabItem>
                     </TabControl>

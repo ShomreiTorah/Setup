@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="Configurator.Controls.DatabaseSettings" x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Configurator"
+             xmlns:controls="clr-namespace:Configurator.Controls"
+             DataContext="{Binding Source={x:Static local:MainWindow.DesignerSample}, Path=DefaultDB}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Label    Grid.Row="0">Database Type</Label>
+        <ComboBox Grid.Row="0" Grid.Column="1" Text="{Binding Type}" ItemsSource="{x:Static local:Database.Types}" />
+
+        <Label   Grid.Row="1">Connection String</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ConnectionString}" />
+
+        <controls:HelpBox Grid.Row="2" Grid.ColumnSpan="2" MemberName="DatabaseConfig.BackupPath" Margin="0,10" />
+
+        <Label            Grid.Row="3">Backup to</Label>
+        <controls:PathBox Grid.Row="3" Grid.Column="1" Text="{Binding BackupPath}" />
+
+
+    </Grid>
+</UserControl>

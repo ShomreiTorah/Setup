@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,9 +60,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ConfigFiles.cs" />
+    <Compile Include="Controls\DatabaseSettings.xaml.cs">
+      <DependentUpon>DatabaseSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PathBox.xaml.cs">
+      <DependentUpon>PathBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SmtpSettings.xaml.cs">
       <DependentUpon>SmtpSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Database.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Controls\HelpBox.xaml.cs">
       <DependentUpon>HelpBox.xaml</DependentUpon>
@@ -75,7 +83,15 @@
     <Compile Include="Schema\ScheduleConfig.cs" />
     <Compile Include="Schema\SmtpConfig.cs" />
     <Compile Include="Schema\ZmanimConfig.cs" />
+    <Page Include="Controls\DatabaseSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\HelpBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PathBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
