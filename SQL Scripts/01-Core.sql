@@ -4,12 +4,19 @@
 IF schema_id('Data') IS NULL
 	EXECUTE('create schema Data');
 GO
+CREATE FUNCTION Data.StripPhone(@phone VARCHAR(20)) 
+	RETURNS VARCHAR(10)
+AS
+BEGIN
+	RETURN REPLACE(REPLACE(REPLACE(REPLACE(@phone, '-', ''), ' ', ''), '(', ''), ')', '');
+END
+GO
 CREATE FUNCTION Data.FormatPhone(@phone VARCHAR(20)) 
 	RETURNS VARCHAR(16)
 AS
 BEGIN
 	DECLARE @strippedPhone VARCHAR(10)
-	SET @strippedPhone = REPLACE(REPLACE(REPLACE(REPLACE(@phone, '-', ''), ' ', ''), '(', ''), ')', '');
+	SET @strippedPhone = StripPhone(@phone)
 	
 	IF(LEN(@strippedPhone) = 7) RETURN SUBSTRING(@strippedPhone, 1, 3) + ' - ' + SUBSTRING(@strippedPhone, 4, 4);
 	IF(LEN(@strippedPhone) <> 10) RETURN @phone;
