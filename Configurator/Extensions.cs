@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -24,6 +25,33 @@ namespace Configurator {
 				empties = parents;
 			}
 		}
+
+		///<summary>Writes raw bytes to a stream.</summary>
+		///<param name="stream">The stream to write to.</param>
+		///<param name="data">The bytes to write.</param>
+		///<remarks>This method removes the need for temporary variables to get the length of the byte array.</remarks>
+		public static void WriteAllBytes(this Stream stream, byte[] data) { stream.Write(data, 0, data.Length); }
+
+		///<summary>Fills a byte array from a stream.</summary>
+		///<returns>The number of bytes read.  If the end of the stream was reached, this will be less than the size of the array.</returns>
+		///<remarks>Stream.Read is not guaranteed to read length bytes even if it doesn't hit the end of the stream, so I wrote this method, which is.</remarks>
+		public static int ReadFill(this Stream stream, byte[] buffer) { return stream.ReadFill(buffer, buffer.Length); }
+		///<summary>Reads a given number of bytes into a byte array from a stream.</summary>
+		///<returns>The number of bytes read.  If the end of the stream was reached, this will be less than the length.</returns>
+		///<remarks>Stream.Read is not guaranteed to read length bytes even if it doesn't hit the end of the stream, so I wrote this method, which is.</remarks>
+		public static int ReadFill(this Stream stream, byte[] buffer, int length) {
+			if (stream == null) throw new ArgumentNullException("stream");
+			if (buffer == null) throw new ArgumentNullException("buffer");
+
+			int position = 0;
+			while (position < length) {
+				var bytesRead = stream.Read(buffer, position, length - position);
+				if (bytesRead == 0) break;
+				position += bytesRead;
+			}
+			return position;
+		}
+
 
 		public static void SaveIndent(this XDocument doc, string path, string indent = "\t") {
 			using (var writer = XmlWriter.Create(path, new XmlWriterSettings { IndentChars = indent, Indent = true, NewLineOnAttributes = true })) {

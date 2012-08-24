@@ -74,6 +74,7 @@
     <Compile Include="Controls\HelpBox.xaml.cs">
       <DependentUpon>HelpBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KeyStorage.cs" />
     <Compile Include="Properties\ExePath.cs" />
     <Compile Include="Schema\ConfigRoot.cs" />
     <Compile Include="Schema\CryptoKey.cs" />
