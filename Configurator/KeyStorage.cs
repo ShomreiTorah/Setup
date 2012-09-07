@@ -14,7 +14,7 @@ namespace Configurator {
 			byte[] key = Unsalt(file, password);
 			byte[] iv = Unsalt(file, password);
 
-			using (var aes = new RijndaelManaged { Key = key, IV = iv })
+			using (var aes = new RijndaelManaged { KeySize = BlockSize * 8, BlockSize = BlockSize * 8, Key = key, IV = iv })
 			using (var transform = aes.CreateDecryptor())
 			using (var stream = new CryptoStream(file, transform, CryptoStreamMode.Read))
 			using (var reader = new StreamReader(stream)) {
@@ -35,7 +35,7 @@ namespace Configurator {
 			byte[] key = DeriveBytes(file, password);
 			byte[] iv = DeriveBytes(file, password);
 
-			using (var aes = new RijndaelManaged { Key = key, IV = iv })
+			using (var aes = new RijndaelManaged { KeySize = BlockSize * 8, BlockSize = BlockSize * 8, Key = key, IV = iv })
 			using (var transform = aes.CreateEncryptor())
 			using (var stream = new CryptoStream(file, transform, CryptoStreamMode.Write))
 			using (var writer = new StreamWriter(stream)) {
