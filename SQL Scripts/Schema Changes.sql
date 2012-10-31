@@ -7,6 +7,8 @@
  * 
  * Please comment changes with date and purpose.
  * This file is not executed by the configurator
+ *
+ * It would be very nice to switch to EF migrations...
  */
 
 ALTER TABLE Data.MasterDirectory ADD [RowVersion] RowVersion;
@@ -40,3 +42,6 @@ ALTER TABLE dbo.tblMLMembers ALTER COLUMN Email NVARCHAR(100);
 --2011-11-14 Unlisted CMS pages
 ALTER TABLE Website.Pages ADD IsListed BIT NOT NULL DEFAULT(0);
 UPDATE Website.Pages SET IsListed = 1 WHERE PageName = 'Home';
+
+--2012-09-10 Larger seating notes
+ALTER TABLE Seating.SeatingReservations ALTER COLUMN Notes NVARCHAR(2048) NOT NULL
