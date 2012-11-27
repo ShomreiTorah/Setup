@@ -16,7 +16,7 @@ CREATE FUNCTION Data.FormatPhone(@phone VARCHAR(20))
 AS
 BEGIN
 	DECLARE @strippedPhone VARCHAR(10)
-	SET @strippedPhone = StripPhone(@phone)
+	SET @strippedPhone = Data.StripPhone(@phone)
 	
 	IF(LEN(@strippedPhone) = 7) RETURN SUBSTRING(@strippedPhone, 1, 3) + ' - ' + SUBSTRING(@strippedPhone, 4, 4);
 	IF(LEN(@strippedPhone) <> 10) RETURN @phone;
