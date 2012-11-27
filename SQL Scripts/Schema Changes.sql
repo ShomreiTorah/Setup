@@ -45,3 +45,8 @@ UPDATE Website.Pages SET IsListed = 1 WHERE PageName = 'Home';
 
 --2012-09-10 Larger seating notes
 ALTER TABLE Seating.SeatingReservations ALTER COLUMN Notes NVARCHAR(2048) NOT NULL
+
+--2012-11-25 Multiple honorees
+ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	HonoreeTitle	NVARCHAR(128)		NOT NULL	DEFAULT('Guests of Honor');
+ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	Honoree2		UNIQUEIDENTIFIER	NULL		DEFAULT(NULL) REFERENCES Data.MasterDirectory(Id);
+ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	Honoree2Title	NVARCHAR(128)		NULL		DEFAULT(NULL);

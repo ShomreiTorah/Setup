@@ -14,6 +14,11 @@ CREATE TABLE MelaveMalka.MelaveMalkaInfo (
 	MelaveMalkaDate	DATETIME			NOT NULL,
 
 	Honoree			UNIQUEIDENTIFIER	NOT NULL	REFERENCES Data.MasterDirectory(Id),
+	HonoreeTitle	NVARCHAR(128)		NOT NULL	DEFAULT('Guests of Honor'),
+
+	Honoree2		UNIQUEIDENTIFIER	NULL		DEFAULT(NULL) REFERENCES Data.MasterDirectory(Id),
+	Honoree2Title	NVARCHAR(128)		NULL		DEFAULT(NULL),
+
 	Speaker			NVARCHAR(128)		NOT NULL
 );
 
