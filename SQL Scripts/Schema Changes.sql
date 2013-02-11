@@ -50,3 +50,6 @@ ALTER TABLE Seating.SeatingReservations ALTER COLUMN Notes NVARCHAR(2048) NOT NU
 ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	HonoreeTitle	NVARCHAR(128)		NOT NULL	DEFAULT('Guests of Honor');
 ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	Honoree2		UNIQUEIDENTIFIER	NULL		DEFAULT(NULL) REFERENCES Data.MasterDirectory(Id);
 ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	Honoree2Title	NVARCHAR(128)		NULL		DEFAULT(NULL);
+
+--2013-02-07 Stripe Credit Cards
+ALTER TABLE Data.MasterDirectory ADD StripeId		VARCHAR(32)			NULL;

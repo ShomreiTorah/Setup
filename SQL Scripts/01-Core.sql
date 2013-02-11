@@ -39,6 +39,7 @@ CREATE TABLE Data.MasterDirectory (
 	Zip				VARCHAR(5)			NULL,
 	Phone			VARCHAR(20)			NOT NULL,
 	[Source]		NVARCHAR(64)		NOT NULL	DEFAULT('Manually Added'),
+	StripeId		VARCHAR(32)			NULL,
 	[RowVersion]	RowVersion
 );
 	
