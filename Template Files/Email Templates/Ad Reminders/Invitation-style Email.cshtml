@@ -5,8 +5,6 @@
 @{
     EmailSubject = Config.OrgName + " Melave Malka";
     var mm = DataContext.Table<MelaveMalkaInfo>().Rows.Single(m => m.Year == Row.Year);
-
-    List<Pledge> lastYear = Row.Person.Pledges.Where(p => p.ExternalSource == "Journal " + (mm.Year - 1)).ToList();
 }
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
@@ -32,26 +30,9 @@
         <p>
             We are pleased to invite you to the annual Melave Malka of @Config.OrgName, to take place on מוצאי שבת פרשת
             @(new HebrewDate(mm.MelaveMalkaDate).Parsha), @mm.MelaveMalkaDate.ToString("MMMM d 'at' h:mm tt").
-            Our guests of honor this year are @mm.Honoree.FullName.<br />
+            Our guests of honor this year are @(mm.Honoree.FullName + (mm.Honoree2 != null ? " and " + mm.Honoree2.FullName : "")).<br />
         </p>
-        <p>
-            @if (lastYear.Any()) {
-                @:Last year, you were kind enough to give
-			        var adTypes = lastYear.GroupBy(p => p.SubType, (subtype, set) => set.Has(2) ? (set.Count() + " " + subtype.ToLower() + "s") : "a " + subtype.ToLower()).ToList();
-                    if (lastYear.Count <= 2) {
-                        Write(adTypes.Join(" and "));
-                    } else {
-                        Write(
-                            (adTypes.Take(adTypes.Count - 1).Join(", ") + ", and " + lastYear.Last()).ToLower()
-                        );
-                    }
-                <text> to the journal for @(lastYear.Has(2) ? " a total of " : "")
-                @lastYear.Sum(p => p.Amount).ToString("c"). We hope that you will come to the Melave
-                Malka and give the same (or higher) this year.</text>
-            } else {
-                <text>We hope that you will come to the Melave Malka and give an ad for the journal.</text>
-            }
-        </p>
+        @Include("_LastYear", Row)
         <p>
             The deadline for ads is @mm.AdDeadline.ToLongDateString().<br />
             You can download an ad blank by clicking <a href="http://@(Config.DomainName + mm.AdBlankPath)">here</a>.

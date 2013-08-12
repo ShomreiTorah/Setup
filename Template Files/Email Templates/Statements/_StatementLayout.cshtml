@@ -1,4 +1,4 @@
-@inherits ShomreiTorah.Statements.Email.StatementPage
+@inherits PartialPage
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -21,13 +21,22 @@
                     </td>
                     <td style="width: 250px">
                         <p>
-                            Federal Tax ID: @***Insert tax ID here ***@
-                        </p>
+                            Federal Tax ID: 47-0953005</p>
                         @MultiLine(Config.MailingAddress.Trim())
                     </td>
                 </tr>
             </table>
         </div>
+        <table cellspacing="0" width="100%">
+            <tr>
+                <td style="padding-top: 15px;">
+                    @MultiLine(Info.Person.MailingAddress)
+                </td>
+                <td style="padding-top: 15px; width: 250px; vertical-align: top;">
+                    @DateTime.Today.ToLongDateString() </td>
+            </tr>
+        </table>
+
         @RenderBody()
     </body>
 

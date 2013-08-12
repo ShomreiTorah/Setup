@@ -1,0 +1,29 @@
+@inherits PartialPage<StatementAccount>
+@{
+    const string StripeStyle = "background: #E8EBFF;";
+    string curStyle = "";
+}
+
+<tr>
+    <td colspan="3"><i>As of @Info.LastEnteredPayment.ToLongDateString()</i></td>
+</tr>
+@foreach (var payment in Model.Payments) {
+    curStyle = curStyle == "" ? StripeStyle : "";
+    <tr>
+        <td style="padding-right: 8px; @curStyle">@payment.Date.ToShortDateString()</td>
+        <td style="@curStyle">@payment.MethodDescription</td>
+        <td style="text-align: right; @curStyle">@payment.Amount.ToString("c")</td>
+    </tr>
+}
+@if (Model.Payments.Count == 0) {
+    <tr>
+        <td colspan="3">You have no @Model.AccountName.ToLowerInvariant() payments on record after
+                @Info.StartDate.ToLongDateString() </td>
+    </tr>
+} else {
+    <tr>
+        <td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">Total: </td>
+        <td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">@Model.TotalPaid.ToString("c")
+        </td>
+    </tr>
+}

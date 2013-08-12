@@ -1,0 +1,31 @@
+@inherits PartialPage<StatementAccount>
+@{
+    const string StripeStyle = "background: #E8EBFF;";
+    string curStyle = "";
+}
+
+<tr>
+    <td colspan="2" style="padding-bottom: 7px;">Starting Balance (as of
+                @Info.StartDate.ToShortDateString()): </td>
+    <td style="text-align: right; padding-bottom: 7px;">
+        @Model.OutstandingBalance.ToString("c")</td>
+</tr>
+@foreach (var pledge in Model.Pledges) {
+    curStyle = curStyle == "" ? StripeStyle : "";
+    <tr>
+        <td style="padding-right: 8px; @curStyle">@pledge.Date.ToShortDateString()</td>
+        <td style="@curStyle">
+            @(pledge.Type + (String.IsNullOrEmpty(pledge.SubType) ? "" : ", " + pledge.SubType))
+            @if (!String.IsNullOrEmpty(pledge.Note)) {
+                <div style="font-style: italic;">@pledge.Note</div>
+            }
+        </td>
+        <td style="text-align: right; @curStyle">@pledge.Amount.ToString("c")</td>
+    </tr>
+}
+<tr>
+    <td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">Total: </td>
+    <td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">
+        @Model.TotalPledged.ToString("c")
+    </td>
+</tr>

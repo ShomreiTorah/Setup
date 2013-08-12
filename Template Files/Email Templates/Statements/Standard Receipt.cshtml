@@ -2,22 +2,12 @@
 @{
     EmailSubject = Config.OrgName + " Receipt";
     Kind = StatementKind.Receipt;
-    _Layout = "_StatementLayout";
+    Layout = "_StatementLayout";
 }
 @section Title {
     @Config.OrgName<br />
-    @Info.StartDate.Year
-Contributions Summary
+    @Info.StartDate.Year Contributions Summary
 }
-<table cellspacing="0" width="100%">
-    <tr>
-        <td style="padding-top: 15px;">
-            @Raw(WebUtility.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />"))
-        </td>
-        <td style="padding-top: 15px; width: 250px; vertical-align: top;">
-            @DateTime.Today.ToLongDateString()</td>
-    </tr>
-</table>
 <p>
     Dear @Info.Person.FullName,</p>
 <p>
@@ -43,27 +33,7 @@ Contributions Summary
                 </th>
             </tr>
         </thead>
-        const string StripeStyle = "background: #E8EBFF;";
-        string curStyle = "";
-
-        foreach (var payment in account.Payments) {
-            curStyle = curStyle == "" ? StripeStyle : "";
-        <tr>
-            <td style="padding-right: 8px; @curStyle">@payment.Date.ToShortDateString()</td>
-            <td style="@curStyle">
-                @payment.Method.Replace("Unknown", "?")
-                @if (!String.IsNullOrEmpty(payment.CheckNumber)) {
-                    <text>#@payment.CheckNumber</text>
-                }
-            </td>
-            <td style="text-align: right; @curStyle">@payment.Amount.ToString("c")</td>
-        </tr>
-        }
-        <tr>
-            <td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">Total:</td>
-            <td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">@account.TotalPaid.ToString("c")
-            </td>
-        </tr>
+        @Include("_Payments", account)
     }
 </table>
 <p>

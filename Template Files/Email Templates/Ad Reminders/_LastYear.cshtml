@@ -1,0 +1,40 @@
+@inherits ShomreiTorah.Billing.Events.MelaveMalka.PartialPage<MelaveMalkaInvitation>
+@using ShomreiTorah.Common;
+@using ShomreiTorah.Data;
+@{
+    var source = "Journal " + (Model.Year - 1);
+    List<Pledge> lastYear = Model.Person.Pledges.Where(p => p.ExternalSource == source).ToList();
+
+    var otherIds = new HashSet<int?>(
+        DataContext.Table<Pledge>().Rows.Where(p => p.ExternalSource == source && p.Person != Model.Person)
+                                        .Select(p => p.ExternalId)
+    );
+    List<Pledge> jointAds = lastYear.Where(p => otherIds.Contains(p.ExternalId)).ToList();
+
+    lastYear.RemoveAll(jointAds.Contains);
+
+    bool hadFreeAd = lastYear.Any() && lastYear.Sum(p => p.Amount) == 0;
+}
+<p>
+    @if (hadFreeAd) {
+        <text>We hope that you will come to the Melave Malka.</text>
+    } else if (lastYear.Any()) {
+        @:Last year, you were kind enough to give
+		var adTypes = lastYear.GroupBy(p => p.SubType, (subtype, set) => set.Has(2) ? (set.Count() + " " + subtype.ToLower() + "s") : "a " + subtype.ToLower()).ToList();
+        if (lastYear.Count <= 2) {
+            Write(adTypes.Join(" and "));
+        } else {
+            Write(
+                (adTypes.Take(adTypes.Count - 1).Join(", ") + ", and " + adTypes.Last()).ToLower()
+            );
+        }
+        <text> to the journal for @(lastYear.Has(2) ? " a total of " : "")
+        @lastYear.Sum(p => p.Amount).ToString("c"). We hope that you will come to the Melave
+                Malka and give the same (or higher) this year.  (Please note new prices for this year's journal.)  If you would like, we can use last year's text.</text>
+    } else if (jointAds.Any()) {
+        <text>Last year, you were kind enough to contribute @jointAds.Sum(p => p.Amount).ToString("c")
+        towards @(jointAds.Count == 1 ? "a joint ad" : jointAds.Count + " joint ads").</text>
+    } else {
+        <text>We hope that you will come to the Melave Malka and give an ad for the journal.</text>
+    }
+</p>
