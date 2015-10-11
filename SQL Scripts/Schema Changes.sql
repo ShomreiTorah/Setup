@@ -53,3 +53,13 @@ ALTER TABLE MelaveMalka.MelaveMalkaInfo ADD	Honoree2Title	NVARCHAR(128)		NULL		D
 
 --2013-02-07 Stripe Credit Cards
 ALTER TABLE Data.MasterDirectory ADD StripeId		VARCHAR(32)			NULL;
+
+--2014-01-05 Allow international addresses
+ALTER TABLE Data.MasterDirectory ALTER COLUMN State	VARCHAR(32)			NULL;
+ALTER TABLE Data.MasterDirectory ALTER COLUMN Zip	VARCHAR(10)			NULL;
+
+--2015-10-11 Allow Unicode payment notes
+EXEC sp_rename 'Billing.Payments.CheckNumber', 'OldCheckNumber', 'COLUMN';
+ALTER TABLE Billing.Payments ADD CheckNumber		NVARCHAR(64)			NULL;
+UPDATE Billing.Payments SET CheckNumber = OldCheckNumber
+ALTER TABLE Billing.Payments DROP OldCheckNumber;

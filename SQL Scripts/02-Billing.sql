@@ -42,7 +42,7 @@ CREATE TABLE Billing.Payments (
 	PersonId		UNIQUEIDENTIFIER	NOT NULL	REFERENCES Data.MasterDirectory(Id),
 	[Date]			DATETIME			NOT NULL	DEFAULT getdate(),
 	Method			NVARCHAR(64)		NOT NULL,
-	CheckNumber		VARCHAR(32)			NULL,
+	CheckNumber		NVARCHAR(64)			NULL,
 	Account			VARCHAR(32)			NOT NULL	DEFAULT 'Operating Fund',
 	Amount			MONEY				NOT NULL,
 	DepositId		UNIQUEIDENTIFIER	NULL		DEFAULT NULL REFERENCES Billing.Deposits(DepositId) ON DELETE SET NULL,
