@@ -138,6 +138,9 @@
                     <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding Ftp.SSL}" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
+			<TabItem Header="Updates">
+				<controls:UpdateSettings DataContext="{Binding}" />
+			</TabItem>
             <TabItem Header="POP3">
                 <Grid>
                     <Grid.ColumnDefinitions>

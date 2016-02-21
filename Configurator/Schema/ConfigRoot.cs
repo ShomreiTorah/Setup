@@ -22,7 +22,7 @@ namespace Configurator.Schema {
 		[ConfigProperty("Databases/Test")]
 		public DatabaseConfig TestDb { get; private set; }
 
-		///<summary>Enter the directory on the web server that contains update binaries.  This is also used to upload updates over FTP.  All update files are encrypted.</summary>
+		///<summary>Enter the URL (can be absolute or relative to DomainName) to the directory that contains update binaries.  This is also used to upload updates over FTP.  All update files are encrypted.</summary>
 		[ConfigProperty("Updates/@Path")]
 		public string UpdatePath { get; set; }
 		///<summary>Enter the encryption method, key and initialization vector (IV) used to encrypt update files on the web server.  The key and IV should be random bit strings matching the encryption block size (typically 256-bit).</summary>
