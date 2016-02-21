@@ -1,4 +1,4 @@
-﻿--This file creates the tables used by the Melave Malka system 
+﻿--This file creates the tables used by the Melave Malka system
 --(in the Billing and Journal applications)
 --It depends on Core and Billing.
 
@@ -44,7 +44,7 @@ CREATE TABLE MelaveMalka.Invitees (
 
 	--For call list:
 	ShouldCall		BIT					NOT NULL	DEFAULT(0),
-	[Caller]		UNIQUEIDENTIFIER	NULL		DEFAULT(NULL)	REFERENCES MelaveMalka.Callers(RowId),
+	[Caller]		UNIQUEIDENTIFIER	NULL		DEFAULT(NULL)	REFERENCES MelaveMalka.Callers(RowId) ON DELETE SET NULL,
 	CallerNote		NVARCHAR(512)		NULL,
 
 	--For reminder emails
@@ -56,7 +56,7 @@ CREATE TABLE MelaveMalka.Invitees (
 CREATE TABLE MelaveMalka.ReminderEmailLog (
 	RowId			UNIQUEIDENTIFIER	NOT NULL	ROWGUIDCOL	PRIMARY KEY DEFAULT(newid()),
 	[RowVersion]	RowVersion,
-	InviteId		UNIQUEIDENTIFIER	NOT NULL	REFERENCES MelaveMalka.Invitees(RowId),
+	InviteId		UNIQUEIDENTIFIER	NOT NULL	REFERENCES MelaveMalka.Invitees(RowId) ON DELETE CASCADE,
 
 	[Date]			DATETIME			NOT NULL,
 	EmailSubject	NVARCHAR(256)		NOT NULL,
