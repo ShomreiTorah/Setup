@@ -82,6 +82,7 @@ namespace Configurator.Controls {
 						break;
 					}
 			}
+			GetBindingExpression(TextProperty).UpdateSource();
 		}
 	}
 

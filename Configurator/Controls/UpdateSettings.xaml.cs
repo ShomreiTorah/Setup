@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using System.Windows.Data;
 
 namespace Configurator.Controls {
 	/// <summary>
@@ -16,6 +17,14 @@ namespace Configurator.Controls {
 	partial class UpdateSettings : UserControl {
 		public UpdateSettings() {
 			InitializeComponent();
+		}
+
+		void SetText(TextBox textBox, string value) {
+			textBox.Text = value;
+			textBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+		}
+		void SetPublicKey(RSA rsa) {
+			SetText(rsaKey, XElement.Parse(rsa.ToXmlString(false)).ToString());
 		}
 
 		private void SymmetricKeygen_Click(object sender, RoutedEventArgs e) {
@@ -27,9 +36,8 @@ namespace Configurator.Controls {
 				return;
 			}
 			alg.BlockSize = alg.KeySize = 256;
-			key.Text = Convert.ToBase64String(alg.Key);
-			iv.Text = Convert.ToBase64String(alg.IV);
-
+			SetText(key, Convert.ToBase64String(alg.Key));
+			SetText(iv, Convert.ToBase64String(alg.IV));
 		}
 
 		// TODO: Embed hash in private key file.
@@ -63,7 +71,7 @@ namespace Configurator.Controls {
 			using (var stream = dialog.OpenFile())
 			using (var rsa = new RSACryptoServiceProvider(4096)) {
 				KeyStorage.WriteKey(stream, password, rsa);
-				rsaKey.Text = XElement.Parse(rsa.ToXmlString(false)).ToString();
+				SetPublicKey(rsa);
 			}
 		}
 		private void AsymmetricCompare_Click(object sender, RoutedEventArgs e) {
@@ -108,9 +116,8 @@ namespace Configurator.Controls {
 			if (dialog.ShowDialog() != true)
 				return;
 			using (var stream = dialog.OpenFile())
-			using (var rsa = KeyStorage.ReadKey(stream, password)) {
-				rsaKey.Text = XElement.Parse(rsa.ToXmlString(false)).ToString();
-			}
+			using (var rsa = KeyStorage.ReadKey(stream, password))
+				SetPublicKey(rsa);
 		}
 	}
 }
