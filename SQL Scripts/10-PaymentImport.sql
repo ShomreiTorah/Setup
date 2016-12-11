@@ -2,7 +2,6 @@
 --plugin for the billing system.
 --It depends on Core and Billing.
 
-DROP TABLE Billing.ImportedPayments;
 CREATE TABLE Billing.ImportedPayments (
 	ImportedPaymentId UNIQUEIDENTIFIER	NOT NULL	ROWGUIDCOL	PRIMARY KEY DEFAULT(newid()),
 	PaymentId		UNIQUEIDENTIFIER	NOT NULL	UNIQUE		REFERENCES Billing.Payments(PaymentId) ON DELETE CASCADE,
