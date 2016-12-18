@@ -29,6 +29,7 @@ CREATE TABLE BillingMigration.StagedPayments (
 	CheckNumber		NVARCHAR(64)			NULL,
 	Account			VARCHAR(32)			NOT NULL	DEFAULT 'Operating Fund',
 	Amount			MONEY				NOT NULL,
+	Company			NVARCHAR(100)		NULL,
 	Comments		NVARCHAR(512)		NULL,
 	ExternalId		NVARCHAR(64)		NOT NULL,
 	[RowVersion]	RowVersion

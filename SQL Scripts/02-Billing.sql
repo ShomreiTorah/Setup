@@ -45,6 +45,7 @@ CREATE TABLE Billing.Payments (
 	CheckNumber		NVARCHAR(64)			NULL,
 	Account			VARCHAR(32)			NOT NULL	DEFAULT 'Operating Fund',
 	Amount			MONEY				NOT NULL,
+	Company			NVARCHAR(100)		NULL,
 	DepositId		UNIQUEIDENTIFIER	NULL		DEFAULT NULL REFERENCES Billing.Deposits(DepositId) ON DELETE SET NULL,
 	Comments		NVARCHAR(512)		NULL,
 	Modified		DATETIME			NOT NULL	DEFAULT getdate(),

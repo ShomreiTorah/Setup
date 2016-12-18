@@ -67,3 +67,7 @@ ALTER TABLE Billing.Payments DROP OldCheckNumber;
 --2016-02-20 Add missing foreign key cascades
 ALTER TABLE MelaveMalka.ReminderEmailLog ADD CONSTRAINT FK_MelaveMalka_ReminderEmailLog_InviteId FOREIGN KEY(InviteId) REFERENCES MelaveMalka.Invitees(RowId) ON DELETE CASCADE;
 ALTER TABLE MelaveMalka.Invitees		 ADD CONSTRAINT FK_MelaveMalka_Invitees_Caller FOREIGN KEY([Caller]) REFERENCES MelaveMalka.Callers(RowId) ON DELETE SET NULL;
+
+--2016-12-18 Add missing foreign key cascades
+ALTER TABLE Billing.Payments				ADD 	Company			NVARCHAR(100)		NULL;
+ALTER TABLE BillingMigration.StagedPayments ADD 	Company			NVARCHAR(100)		NULL;
