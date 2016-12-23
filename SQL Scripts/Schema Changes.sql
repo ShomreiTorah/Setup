@@ -71,3 +71,6 @@ ALTER TABLE MelaveMalka.Invitees		 ADD CONSTRAINT FK_MelaveMalka_Invitees_Caller
 --2016-12-18 Add missing foreign key cascades
 ALTER TABLE Billing.Payments				ADD 	Company			NVARCHAR(100)		NULL;
 ALTER TABLE BillingMigration.StagedPayments ADD 	Company			NVARCHAR(100)		NULL;
+
+ALTER TABLE BillingMigration.StagedPeople	ADD CONSTRAINT FK_BillingMigration_StagedPeople_StagedPersonId FOREIGN KEY(StagedPersonId) REFERENCES Data.MasterDirectory(Id) ON DELETE SET NULL;
+ALTER TABLE BillingMigration.StagedPayments		 ADD CONSTRAINT FK_BillingMigration_StagedPayments_StagedPersonId FOREIGN KEY(StagedPersonId) REFERENCES BillingMigration.StagedPeople(StagedPersonId) ON DELETE CASCADE;

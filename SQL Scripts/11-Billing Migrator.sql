@@ -8,7 +8,7 @@ GO
 
 CREATE TABLE BillingMigration.StagedPeople (
 	StagedPersonId	UNIQUEIDENTIFIER	NOT NULL	ROWGUIDCOL	PRIMARY KEY DEFAULT(newid()),
-	PersonId		UNIQUEIDENTIFIER		NULL	REFERENCES Data.MasterDirectory(Id),
+	PersonId		UNIQUEIDENTIFIER		NULL	REFERENCES Data.MasterDirectory(Id) ON DELETE SET NULL,
 	HisName			NVARCHAR(100)		NOT NULL,
 	HerName			NVARCHAR(100)		NOT NULL,
 	LastName		NVARCHAR(100)		NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE BillingMigration.StagedPeople (
 
 CREATE TABLE BillingMigration.StagedPayments (
 	StagedPaymentId	UNIQUEIDENTIFIER	NOT NULL	ROWGUIDCOL	PRIMARY KEY DEFAULT(newid()),
-	StagedPersonId	UNIQUEIDENTIFIER	NOT NULL	REFERENCES BillingMigration.StagedPeople(StagedPersonId),
+	StagedPersonId	UNIQUEIDENTIFIER	NOT NULL	REFERENCES BillingMigration.StagedPeople(StagedPersonId) ON DELETE CASCADE,
 	[Date]			DATETIME			NOT NULL,
 	Method			NVARCHAR(64)		NOT NULL,
 	CheckNumber		NVARCHAR(64)			NULL,
