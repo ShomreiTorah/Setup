@@ -24,6 +24,7 @@ goto :end
 copy "%1..\..\Config\Debug\Web.ConnectionStrings.config" "%1"
 copy "%1..\..\Config\Production\Web.release.config" "%1"
 
+mkdir "%1App_Data\"
 if "%2" == "Debug" (
     del "%1App_Data\ShomreiTorahConfig.xml"
 ) else (
